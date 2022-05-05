@@ -29,14 +29,12 @@ interface CombatStats {
     frostbite: number,
     sleep: number,
     madness: number,
-    deathBlight: number,
     poisonImmune: boolean,
     scarletRotImmune: boolean,
     hemorrhageImmune: boolean,
     frostbiteImmune: boolean,
     sleepImmune: boolean,
     madnessImmune: boolean,
-    deathBlightImmune: boolean,
   };
 }
 
@@ -73,14 +71,12 @@ export class AppComponent implements AfterViewInit, OnInit {
       frostbite: [100],
       sleep: [100],
       madness: [100],
-      deathBlight: [100],
       poisonImmune: [false],
       scarletRotImmune: [false],
       hemorrhageImmune: [false],
       frostbiteImmune: [false],
       sleepImmune: [false],
       madnessImmune: [false],
-      deathBlightImmune: [false],
     }),
   });
 
@@ -152,7 +148,6 @@ export class AppComponent implements AfterViewInit, OnInit {
     this.display = this.display.replace('{{resistances.frostbite}}', resistances.frostbiteImmune ? 'Immune' : resistances.frostbite?.toString());
     this.display = this.display.replace('{{resistances.sleep}}', resistances.sleepImmune ? 'Immune' : resistances.sleep?.toString());
     this.display = this.display.replace('{{resistances.madness}}', resistances.madnessImmune ? 'Immune' : resistances.madness?.toString());
-    this.display = this.display.replace('{{resistances.deathBlight}}', resistances.deathBlightImmune ? 'Immune' : resistances.deathBlight?.toString());
 
     this.highlight.highlightAll();
   }
