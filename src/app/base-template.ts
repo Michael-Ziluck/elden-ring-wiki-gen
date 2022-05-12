@@ -6,7 +6,7 @@ export const BASE_TEMPLATE = `
 </ul>
 <div class="row">
    <div class="col-sm-6">
-      <h4 class="special">Absorptions</h4>
+      <h4 class="special">Negations (or Absorptions)</h4>
       <div class="row">
          <div class="col-sm-6">
             <ul>
@@ -25,7 +25,7 @@ export const BASE_TEMPLATE = `
             </ul>
          </div>
       </div>
-      <p>The absorption numbers are the % of your damage that gets blocked. For example, if an absorption is 60, 40% of that damage by that type will go through and 60% is absorbed. Bigger number = less damage. An absorption of 100 means no damage goes through, and a resistance of -100 mean the enemy takes 2x damage from that source. 0 means damage goes pretty much as is.</p>
+      <p>The negation numbers are the % of your damage that gets blocked. For example, if a negation is 60, 40% of that damage by that type will go through and 60% will be negated. Bigger number = less damage. A negation of 100 means no damage goes through, and a negation of -100 mean the enemy takes 2x damage from that source. 0 means damage goes pretty much as is.</p>
    </div>
    <div class="col-sm-6">
       <h4 class="special">Resistances</h4>
