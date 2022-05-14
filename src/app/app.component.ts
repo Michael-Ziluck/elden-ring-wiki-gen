@@ -1,9 +1,4 @@
-<<<<<<< HEAD
-import { AfterViewInit, Component, OnInit } from '@angular/core';
-=======
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { ViewportScroller } from '@angular/common';
->>>>>>> 25dd6d6 (Display the template as HTML and copy it with formatting intact)
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { BASE_TEMPLATE } from './base-template';
 import { HighlightService } from './highlight.service';
