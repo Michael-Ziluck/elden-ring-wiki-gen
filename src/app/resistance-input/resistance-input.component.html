@@ -1,0 +1,10 @@
+<div class="input-group">
+  <input type="number" class="form-control"
+     [attr.disabled]="disabled || _immune ? '' : null"
+     [ngModel]="value" (ngModelChange)="changeQuantity($event)">
+  <div class="input-group-text">
+    <input class="form-check-input mt-0" type="checkbox"
+       [attr.disabled]="disabled ? '' : null"
+       [ngModel]="_immune" (ngModelChange)="changeImmunity($event)">
+  </div>
+</div>

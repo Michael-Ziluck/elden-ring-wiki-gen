@@ -92,48 +92,42 @@
             resistance;
             context: {
               type: 'Poison',
-              value: stats.resistances.poison,
-              immune: stats.resistances.poisonImmune
+              value: stats.resistances.poison
             }
          "></ng-container>
          <ng-container *ngTemplateOutlet="
             resistance;
             context: {
               type: 'Scarlet Rot',
-              value: stats.resistances.scarletRot,
-              immune: stats.resistances.scarletRotImmune
+              value: stats.resistances.scarletRot
             }
          "></ng-container>
          <ng-container *ngTemplateOutlet="
             resistance;
             context: {
               type: 'Hemorrhage',
-              value: stats.resistances.hemorrhage,
-              immune: stats.resistances.hemorrhageImmune
+              value: stats.resistances.hemorrhage
             }
          "></ng-container>
          <ng-container *ngTemplateOutlet="
             resistance;
             context: {
               type: 'Frostbite',
-              value: stats.resistances.frostbite,
-              immune: stats.resistances.frostbiteImmune
+              value: stats.resistances.frostbite
             }
          "></ng-container>
          <ng-container *ngTemplateOutlet="
             resistance;
             context: {
               type: 'Sleep',
-              value: stats.resistances.sleep,
-              immune: stats.resistances.sleepImmune
+              value: stats.resistances.sleep
             }
          "></ng-container>
          <ng-container *ngTemplateOutlet="
             resistance;
             context: {
               type: 'Madness',
-              value: stats.resistances.madness,
-              immune: stats.resistances.madnessImmune
+              value: stats.resistances.madness
             }
          "></ng-container>
       </ul>
@@ -176,7 +170,7 @@
           attr.data-mce-src="/file/Elden-Ring/{{type | lowercase}}_status_effect_elden_ring_wiki_guide_25px.png"
       >{{type}}</a>:
     <strong>
-      <ng-container *ngIf="!immune; else other">{{value}}</ng-container>
+      <ng-container *ngIf="value !== null; else other">{{value}}</ng-container>
       <ng-template #other>Immune</ng-template>
     </strong>
   </li>

@@ -17,13 +17,12 @@ export interface CombatStats {
     },
   };
   resistances: {
-    poison: number,
+    poison: number|null,
     scarletRot: number,
     hemorrhage: number,
     frostbite: number,
     sleep: number,
     madness: number,
-    poisonImmune: boolean,
     scarletRotImmune: boolean,
     hemorrhageImmune: boolean,
     frostbiteImmune: boolean,

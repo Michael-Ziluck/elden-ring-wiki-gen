@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { BASE_TEMPLATE } from './base-template';
 import { HighlightService } from './highlight.service';
@@ -11,7 +11,7 @@ import { TemplateComponent } from './template/template.component';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements AfterViewInit, OnInit {
+export class AppComponent {
   title = 'elden-ring-wiki-gen';
 
   combatForm: FormGroup = this.fb.group({
@@ -39,12 +39,6 @@ export class AppComponent implements AfterViewInit, OnInit {
       frostbite: [100],
       sleep: [100],
       madness: [100],
-      poisonImmune: [false],
-      scarletRotImmune: [false],
-      hemorrhageImmune: [false],
-      frostbiteImmune: [false],
-      sleepImmune: [false],
-      madnessImmune: [false],
     }),
   });
 
@@ -54,44 +48,5 @@ export class AppComponent implements AfterViewInit, OnInit {
     private fb: FormBuilder,
     private highlight: HighlightService,
   ) {
-  }
-
-  ngOnInit(): void {
-    Object.entries((this.combatForm.controls['resistances'] as FormGroup).controls).forEach(([key, control]) => {
-      if (key.endsWith('Immune')) {
-        control.valueChanges.subscribe(value => {
-          const input = this.combatForm.get('resistances.' + key.replace('Immune', ''))!;
-          if (value) {
-            input.disable();
-            input.setValue(undefined);
-          } else {
-            input.enable();
-            input.setValue(100);
-          }
-        });
-      }
-    });
-
-    this.combatForm.valueChanges.pipe(distinctUntilChanged((a, b) => JSON.stringify(a) === JSON.stringify(b)))
-      .subscribe((value: CombatStats) => {
-        const immunities = Object.entries(value.resistances)
-          .filter(([key, value]) => key.endsWith('Immune') && value === true)
-          .map(([key]) => key.replace('Immune', ''));
-
-        if (immunities.length === 0) {
-          return;
-        }
-
-        immunities.forEach(immunity => {
-          const control: AbstractControl | null = this.combatForm.get('resistances.' + immunity);
-          // clear the value of anything they're immune to
-          control?.disable();
-          // disable it too
-          control?.setValue(undefined);
-        });
-      });
-  }
-
-  ngAfterViewInit(): void {
   }
 }
