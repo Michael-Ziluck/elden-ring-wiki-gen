@@ -1,42 +1,15 @@
+<<<<<<< HEAD
 import { AfterViewInit, Component, OnInit } from '@angular/core';
+=======
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { ViewportScroller } from '@angular/common';
+>>>>>>> 25dd6d6 (Display the template as HTML and copy it with formatting intact)
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { BASE_TEMPLATE } from './base-template';
 import { HighlightService } from './highlight.service';
 import { distinctUntilChanged } from 'rxjs';
-
-interface CombatStats {
-  name: string;
-  health: number;
-  poise: number;
-  absorptions: {
-    physical: {
-      standard: number,
-      slash: number,
-      strike: number,
-      pierce: number,
-    },
-    magic: {
-      magic: number,
-      fire: number,
-      lightning: number,
-      holy: number,
-    },
-  };
-  resistances: {
-    poison: number,
-    scarletRot: number,
-    hemorrhage: number,
-    frostbite: number,
-    sleep: number,
-    madness: number,
-    poisonImmune: boolean,
-    scarletRotImmune: boolean,
-    hemorrhageImmune: boolean,
-    frostbiteImmune: boolean,
-    sleepImmune: boolean,
-    madnessImmune: boolean,
-  };
-}
+import { CombatStats } from './combat-stats';
+import { TemplateComponent } from './template/template.component';
 
 @Component({
   selector: 'app-root',
@@ -80,7 +53,7 @@ export class AppComponent implements AfterViewInit, OnInit {
     }),
   });
 
-  display: string = '';
+  @ViewChild(TemplateComponent) template!: TemplateComponent;
 
   constructor(
     private fb: FormBuilder,
@@ -125,30 +98,5 @@ export class AppComponent implements AfterViewInit, OnInit {
   }
 
   ngAfterViewInit(): void {
-  }
-
-  renderTemplate(): void {
-    this.display = BASE_TEMPLATE;
-    const { name, health, poise, resistances, absorptions }: CombatStats = this.combatForm.value;
-
-    this.display = this.display.replace('{{name}}', name);
-    this.display = this.display.replace('{{health}}', health?.toString());
-    this.display = this.display.replace('{{poise}}', poise?.toString());
-    this.display = this.display.replace('{{physical.standard}}', absorptions.physical.standard?.toString());
-    this.display = this.display.replace('{{physical.slash}}', absorptions.physical.slash?.toString());
-    this.display = this.display.replace('{{physical.strike}}', absorptions.physical.strike?.toString());
-    this.display = this.display.replace('{{physical.pierce}}', absorptions.physical.pierce?.toString());
-    this.display = this.display.replace('{{magic.magic}}', absorptions.magic.magic?.toString());
-    this.display = this.display.replace('{{magic.fire}}', absorptions.magic.fire?.toString());
-    this.display = this.display.replace('{{magic.lightning}}', absorptions.magic.lightning?.toString());
-    this.display = this.display.replace('{{magic.holy}}', absorptions.magic.holy?.toString());
-    this.display = this.display.replace('{{resistances.poison}}', resistances.poisonImmune ? 'Immune' : resistances.poison?.toString());
-    this.display = this.display.replace('{{resistances.scarletRot}}', resistances.scarletRotImmune ? 'Immune' : resistances.scarletRot?.toString());
-    this.display = this.display.replace('{{resistances.hemorrhage}}', resistances.hemorrhageImmune ? 'Immune' : resistances.hemorrhage?.toString());
-    this.display = this.display.replace('{{resistances.frostbite}}', resistances.frostbiteImmune ? 'Immune' : resistances.frostbite?.toString());
-    this.display = this.display.replace('{{resistances.sleep}}', resistances.sleepImmune ? 'Immune' : resistances.sleep?.toString());
-    this.display = this.display.replace('{{resistances.madness}}', resistances.madnessImmune ? 'Immune' : resistances.madness?.toString());
-
-    this.highlight.highlightAll();
   }
 }
