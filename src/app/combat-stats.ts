@@ -1,6 +1,6 @@
 export interface CombatStats {
   name: string;
-  health: number;
+  health: Array<number|null>;
   poise: number;
   absorptions: {
     physical: {

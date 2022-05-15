@@ -1,4 +1,4 @@
-<div #wrapper *ngIf="stats"> 
+<div #wrapper> 
 
 <div class="copied-notification" *ngIf="copied">
   Copied!
@@ -6,7 +6,7 @@
 
 <h3 class="bonfire">{{stats.name}} Combat information</h3>
 <ul>
-   <li>Health: <span style="color: #ffffff;" data-mce-style="color: #ffffff;"><strong>{{stats.health}}</strong> HP</span></li>
+   <li>Health: <span style="color: #ffffff;" data-mce-style="color: #ffffff;"><strong>{{stats.health[0]}}</strong> HP</span></li>
    <li>Poise: <span style="color: #ffffff;" data-mce-style="color: #ffffff;"><strong>{{stats.poise}}</strong></span></li>
 </ul>
 <div class="row">
@@ -134,6 +134,32 @@
       <p>The resistance numbers are the buildup amount to trigger it. For example, if a resistance is 100 you must deal 100 points of the given buildup to trigger it. Note that these go down over time, and increase each time the effect procs.</p>
    </div>
 </div>
+
+<details open *ngIf="showNewGameTable">
+  <summary>NG+ and Beyond (click to expand)</summary>
+  <div class="table-responsive">
+    <table class="wiki_table">
+      <thead>
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">NG</th>
+          <th scope="col">NG+</th>
+          <th scope="col">NG+2</th>
+          <th scope="col">NG+3</th>
+          <th scope="col">NG+4</th>
+          <th scope="col">NG+5</th>
+          <th scope="col">NG+6</th>
+          <th scope="col">NG+7</th>
+      </thead>
+      <tbody>
+        <ng-container *ngTemplateOutlet="
+          newGameRow;
+          context: {name: 'HP', data: stats.health}
+        "></ng-container>
+      </tbody>
+    </table>
+  </div>
+</details>
 </div>
 
 <ng-template #physicalNegation let-type="type" let-value="value">
@@ -174,6 +200,15 @@
       <ng-template #other>Immune</ng-template>
     </strong>
   </li>
+</ng-template>
+
+<ng-template #newGameRow let-name="name" let-data="data">
+  <tr>
+    <th scope="row">{{name}}</th>
+    <ng-container *ngFor='let i of [0, 1, 2, 3, 4, 5, 6, 7]'>
+      <td>{{data[i]}}</td>
+    </ng-container>
+  </tr>
 </ng-template>
 
 <ng-template #immune><strong>Immune</strong></ng-template>

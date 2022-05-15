@@ -10,16 +10,25 @@ export class TemplateComponent {
 
   copied = false;
 
-  @Input() stats?: CombatStats;
+  @Input() stats!: CombatStats;
 
   @ViewChild('wrapper') private wrapper!: ElementRef<HTMLElement>;
+
+  get showNewGameTable(): boolean {
+    return [this.stats.health]
+        .some(array => array.slice(1).some(value => value !== null));
+  }
 
   constructor() { }
 
   async copyFormatted(): Promise<void> {
+    // Details blocks should default to closed on Fextralife itself.
+    const html = this.wrapper.nativeElement.innerHTML
+        .replace(/<details open>/, '<details>');
+
     await navigator.clipboard.write([
       new ClipboardItem({
-        "text/html": new Blob([this.wrapper.nativeElement.innerHTML], {type: "text/html"}),
+        "text/html": new Blob([html], {type: "text/html"}),
         "text/plain": new Blob([this.wrapper.nativeElement.innerText], {type: "text/plain"}),
       })
     ]);

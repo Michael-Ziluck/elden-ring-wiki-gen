@@ -8,13 +8,15 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { TemplateComponent } from './template/template.component';
 import { ReplacePipe } from './replace-pipe';
 import { ResistanceInputComponent } from './resistance-input/resistance-input.component';
+import { NewGameRowInputComponent } from './new-game-row-input/new-game-row-input.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TemplateComponent,
     ReplacePipe,
-    ResistanceInputComponent
+    ResistanceInputComponent,
+    NewGameRowInputComponent
   ],
   imports: [
     BrowserModule,

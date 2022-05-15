@@ -6,11 +6,7 @@
       <label for="name-input" class="form-label">Name</label>
       <input type="text" class="form-control" id="name-input" formControlName="name">
     </div>
-    <div class="col-md-6">
-      <label for="health-input" class="form-label">Health</label>
-      <input type="number" class="form-control" id="health-input" formControlName="health">
-    </div>
-    <div class="col-md-6">
+    <div class="col-md-12">
       <label for="poise-input" class="form-label">Poise</label>
       <input type="number" class="form-control" id="poise-input" formControlName="poise">
     </div>
@@ -59,6 +55,24 @@
       </div>
     </fieldset>
     <!--Resistances-->
+    <table>
+      <thead>
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">NG</th>
+          <th scope="col">NG+</th>
+          <th scope="col">NG+2</th>
+          <th scope="col">NG+3</th>
+          <th scope="col">NG+4</th>
+          <th scope="col">NG+5</th>
+          <th scope="col">NG+6</th>
+          <th scope="col">NG+7</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr formControlName="health" new-game-row-input name="HP"></tr>
+      </tbody>
+    </table>
     <fieldset formGroupName="resistances" class="row mt-3">
       <h4>Resistances</h4>
       <div class="col-md-6">
