@@ -7,7 +7,22 @@
 <h3 class="bonfire">{{stats.name}} Combat information</h3>
 <ul>
    <li>Health: <span style="color: #ffffff;" data-mce-style="color: #ffffff;"><strong>{{stats.health[0]}}</strong> HP</span></li>
+   <li *ngIf="stats.defense[0]">
+     Defense:
+     <span style="color: #ffffff;" data-mce-style="color: #ffffff;">
+       <strong>{{stats.defense[0]}}</strong>
+     </span>
+   </li>
    <li>Poise: <span style="color: #ffffff;" data-mce-style="color: #ffffff;"><strong>{{stats.poise}}</strong></span></li>
+   <li *ngIf="stats.runes[0]">
+     Drops
+     <img
+       title="Runes Icon"
+       alt="Runes Icon"
+       src="https://eldenring.wiki.fextralife.com/file/Elden-Ring/runes-currency-elden-ring-wiki-guide-18.png"
+       attr.data-mce-src="/file/Elden-Ring/runes-currency-elden-ring-wiki-guide-18.png"
+     >{{stats.runes[0]}}
+   </li>
 </ul>
 <div class="row">
    <div class="col-sm-6">
@@ -156,6 +171,18 @@
           newGameRow;
           context: {name: 'HP', data: stats.health}
         "></ng-container>
+        <ng-container *ngTemplateOutlet="
+          newGameRow;
+          context: {name: 'Defense', data: stats.defense}
+        "></ng-container>
+        <ng-container *ngTemplateOutlet="
+          newGameRow;
+          context: {
+            name: 'Runes',
+            data: stats.runes,
+            icon: '/file/Elden-Ring/runes-currency-elden-ring-wiki-guide-18.png'
+          }
+        "></ng-container>
       </tbody>
     </table>
   </div>
@@ -202,9 +229,14 @@
   </li>
 </ng-template>
 
-<ng-template #newGameRow let-name="name" let-data="data">
+<ng-template #newGameRow let-name="name" let-data="data" let-icon="icon">
   <tr>
-    <th scope="row">{{name}}</th>
+    <th scope="row">
+      <img title="{{name}} Icon" alt="{{name}} Icon" width="20" *ngIf="icon"
+          src="https://eldenring.wiki.fextralife.com{{icon}}"
+          attr.data-mce-src="{{icon}}"
+      >{{name}}
+    </th>
     <ng-container *ngFor='let i of [0, 1, 2, 3, 4, 5, 6, 7]'>
       <td>{{data[i]}}</td>
     </ng-container>

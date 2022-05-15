@@ -17,6 +17,8 @@ export class AppComponent {
   combatForm: FormGroup = this.fb.group({
     name: [''],
     health: [[0]],
+    defense: [[]],
+    runes: [[]],
     poise: [0],
     absorptions: this.fb.group({
       physical: this.fb.group({
