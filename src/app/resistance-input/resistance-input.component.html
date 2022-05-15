@@ -1,10 +1,20 @@
-<div class="input-group">
-  <input type="number" class="form-control"
-     [attr.disabled]="disabled || _immune ? '' : null"
-     [ngModel]="value" (ngModelChange)="changeQuantity($event)">
+<th scope="row">{{name}}</th>
+
+<td class="input-group">
   <div class="input-group-text">
     <input class="form-check-input mt-0" type="checkbox"
        [attr.disabled]="disabled ? '' : null"
-       [ngModel]="_immune" (ngModelChange)="changeImmunity($event)">
+       [ngModel]="!_immune" (ngModelChange)="changeImmunity($event)">
   </div>
-</div>
+  <input type="number" class="form-control"
+     [attr.disabled]="disabled || _immune ? '' : null"
+     [ngModel]="(value ?? [])[0]" (ngModelChange)="changeValue(0, $event)">
+</td>
+
+<ng-container *ngFor='let i of [1, 2, 3, 4, 5, 6, 7]'>
+  <td>
+    <input type="number" class="form-control"
+       [attr.disabled]="disabled || _immune ? '' : null"
+       [ngModel]="(value ?? [])[i]" (ngModelChange)="changeValue(i, $event)">
+  </td>
+</ng-container>

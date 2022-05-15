@@ -180,9 +180,67 @@
           context: {
             name: 'Runes',
             data: stats.runes,
+            link: '/Runes',
             icon: '/file/Elden-Ring/runes-currency-elden-ring-wiki-guide-18.png'
           }
         "></ng-container>
+        <ng-container *ngIf="hasNewGameResistances">
+          <tr><th colspan="9"><h4>Resistances</h4></th></tr>
+          <ng-container *ngTemplateOutlet="
+            newGameRow;
+            context: {
+              name: 'Poison',
+              data: stats.resistances.poison,
+              link: '/Poison',
+              icon: '/file/Elden-Ring/poison_status_effect_elden_ring_wiki_guide_25px.png'
+            }
+          "></ng-container>
+          <ng-container *ngTemplateOutlet="
+            newGameRow;
+            context: {
+              name: 'Scarlet Rot',
+              data: stats.resistances.scarletRot,
+              link: '/Scarlet+Rot',
+              icon: '/file/Elden-Ring/scarlet_rot_status_effect_elden_ring_wiki_guide_25px.png'
+            }
+          "></ng-container>
+          <ng-container *ngTemplateOutlet="
+            newGameRow;
+            context: {
+              name: 'Hemorrhage',
+              data: stats.resistances.hemorrhage,
+              link: '/Hemorrhage',
+              icon: '/file/Elden-Ring/hemorrhage_status_effect_elden_ring_wiki_guide_25px.png'
+            }
+          "></ng-container>
+          <ng-container *ngTemplateOutlet="
+            newGameRow;
+            context: {
+              name: 'Frostbite',
+              data: stats.resistances.frostbite,
+              link: '/Frostbite',
+              icon: '/file/Elden-Ring/frostbite_status_effect_elden_ring_wiki_guide_25px.png'
+            }
+          "></ng-container>
+          <ng-container *ngTemplateOutlet="
+            newGameRow;
+            context: {
+              name: 'Sleep',
+              data: stats.resistances.sleep,
+              link: '/Sleep',
+              icon: '/file/Elden-Ring/sleep_status_effect_elden_ring_wiki_guide_25px.png'
+            }
+          "></ng-container>
+          <ng-container *ngTemplateOutlet="
+            newGameRow;
+            context: {
+              name: 'Madness',
+              data: stats.resistances.madness,
+              link: '/Madness',
+              icon: '/file/Elden-Ring/madness_status_effect_elden_ring_wiki_guide_25px.png'
+            }
+          "></ng-container>
+        </ng-container>
       </tbody>
     </table>
   </div>
@@ -223,23 +281,37 @@
           attr.data-mce-src="/file/Elden-Ring/{{type | lowercase}}_status_effect_elden_ring_wiki_guide_25px.png"
       >{{type}}</a>:
     <strong>
-      <ng-container *ngIf="value !== null; else other">{{value}}</ng-container>
+      <ng-container *ngIf="value !== null; else other">{{value[0]}}</ng-container>
       <ng-template #other>Immune</ng-template>
     </strong>
   </li>
 </ng-template>
 
-<ng-template #newGameRow let-name="name" let-data="data" let-icon="icon">
+<ng-template #newGameRow let-name="name" let-data="data" let-link="link" let-icon="icon">
   <tr>
     <th scope="row">
-      <img title="{{name}} Icon" alt="{{name}} Icon" width="20" *ngIf="icon"
-          src="https://eldenring.wiki.fextralife.com{{icon}}"
-          attr.data-mce-src="{{icon}}"
-      >{{name}}
+      <ng-container *ngIf="link; else nameTemplate">
+        <a href="https://eldenring.wiki.fextralife.com{{link}}"
+            attr.data-mce-href="{{link}}">
+          <ng-container *ngTemplateOutlet="nameTemplate"></ng-container>
+        </a>
+      </ng-container>
+      <ng-template #nameTemplate>
+        <img title="{{name}} Icon" alt="{{name}} Icon" width="20" *ngIf="icon"
+            src="https://eldenring.wiki.fextralife.com{{icon}}"
+            attr.data-mce-src="{{icon}}"
+        >{{name}}
+      </ng-template>
     </th>
-    <ng-container *ngFor='let i of [0, 1, 2, 3, 4, 5, 6, 7]'>
-      <td>{{data[i]}}</td>
+
+    <ng-container *ngIf="data !== null; else other">
+      <ng-container *ngFor='let i of [0, 1, 2, 3, 4, 5, 6, 7]'>
+        <td>{{data[i]}}</td>
+      </ng-container>
     </ng-container>
+    <ng-template #other>
+      <td colspan="8" style="text-align: center;"><strong>Immune</strong></td>
+    </ng-template>
   </tr>
 </ng-template>
 

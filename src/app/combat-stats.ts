@@ -1,3 +1,5 @@
+export type Resistance = Array<number|null>|null;
+
 export interface CombatStats {
   name: string;
   health: Array<number|null>;
@@ -19,16 +21,11 @@ export interface CombatStats {
     },
   };
   resistances: {
-    poison: number|null,
-    scarletRot: number,
-    hemorrhage: number,
-    frostbite: number,
-    sleep: number,
-    madness: number,
-    scarletRotImmune: boolean,
-    hemorrhageImmune: boolean,
-    frostbiteImmune: boolean,
-    sleepImmune: boolean,
-    madnessImmune: boolean,
+    poison: Resistance,
+    scarletRot: Resistance,
+    hemorrhage: Resistance,
+    frostbite: Resistance,
+    sleep: Resistance,
+    madness: Resistance,
   };
 }

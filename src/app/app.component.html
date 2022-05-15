@@ -73,35 +73,17 @@
         <tr formControlName="health" new-game-row-input name="HP"></tr>
         <tr formControlName="defense" new-game-row-input name="Defense"></tr>
         <tr formControlName="runes" new-game-row-input name="Runes"></tr>
+        <tr><th colspan="8">Resistances</th></tr>
+        <ng-container formGroupName="resistances">
+          <tr resistance-input formControlName="poison" name="Poison"></tr>
+          <tr resistance-input formControlName="scarletRot" name="Scarlet Rot"></tr>
+          <tr resistance-input formControlName="hemorrhage" name="Hemorrhage"></tr>
+          <tr resistance-input formControlName="frostbite" name="Frostbite"></tr>
+          <tr resistance-input formControlName="sleep" name="Sleep"></tr>
+          <tr resistance-input formControlName="madness" name="Madness"></tr>
+        </ng-container>
       </tbody>
     </table>
-    <fieldset formGroupName="resistances" class="row mt-3">
-      <h4>Resistances</h4>
-      <div class="col-md-6">
-        <label for="poison-input" class="form-label">Poison</label>
-        <resistance-input formControlName="poison"></resistance-input>
-      </div>
-      <div class="col-md-6">
-        <label for="scarlet-rot-input" class="form-label">Scarlet Rot</label>
-        <resistance-input formControlName="scarletRot"></resistance-input>
-      </div>
-      <div class="col-md-6">
-        <label for="hemorrhage-input" class="form-label">Hemorrhage</label>
-        <resistance-input formControlName="hemorrhage"></resistance-input>
-      </div>
-      <div class="col-md-6">
-        <label for="frostbite-input" class="form-label">Frostbite</label>
-        <resistance-input formControlName="frostbite"></resistance-input>
-      </div>
-      <div class="col-md-6">
-        <label for="sleep-input" class="form-label">Sleep</label>
-        <resistance-input formControlName="sleep"></resistance-input>
-      </div>
-      <div class="col-md-6">
-        <label for="madness-input" class="form-label">Madness</label>
-        <resistance-input formControlName="madness"></resistance-input>
-      </div>
-    </fieldset>
   </form>
 
   <div class="copy row g-3 mt-1">

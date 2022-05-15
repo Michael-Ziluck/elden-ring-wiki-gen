@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
-  selector: 'resistance-input',
+  selector: '[resistance-input]',
   templateUrl: './resistance-input.component.html',
   providers: [
     {
@@ -14,7 +14,9 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms';
 })
 export class ResistanceInputComponent {
 
-  onChange = (quantity: number|null) => {};
+  @Input() name!: string;
+
+  onChange = (quantity: Array<number|null>|null) => {};
 
   onTouched = () => {};
 
@@ -22,17 +24,17 @@ export class ResistanceInputComponent {
 
   disabled = false;
 
-  _quantity = 100;
+  _values: Array<number|null> = [];
 
   _immune = false;
 
-  get value(): number|null {
-    return this._immune ? null : this._quantity;
+  get value(): Array<number|null>|null {
+    return this._immune ? null : this._values;
   }
 
-  set value(value: number|null) {
-    if (value) {
-      this._quantity = value;
+  set value(value: Array<number|null>|null) {
+    if (value !== null) {
+      this._values = value;
       this._immune = false;
     } else {
       this._immune = true;
@@ -41,7 +43,7 @@ export class ResistanceInputComponent {
 
   constructor() { }
 
-  writeValue(quantity: number|null): void {
+  writeValue(quantity: Array<number|null>|null): void {
     this.value = quantity;
   }
 
@@ -64,14 +66,14 @@ export class ResistanceInputComponent {
     }
   }
 
-  changeQuantity(quantity: number|null): void {
-    this._quantity = quantity ?? 0;
+  changeValue(i: number, value: number|null): void {
+    this._values[i] = value;
     this.markAsTouched();
     this.onChange(this.value);
   }
 
-  changeImmunity(immune: boolean): void {
-    this._immune = immune;
+  changeImmunity(notImmune: boolean): void {
+    this._immune = !notImmune;
     this.markAsTouched();
     this.onChange(this.value);
   }

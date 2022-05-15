@@ -16,7 +16,13 @@ export class TemplateComponent {
 
   get showNewGameTable(): boolean {
     return [this.stats.health, this.stats.defense, this.stats.runes]
-        .some(array => array.slice(1).some(value => value !== null));
+            .some(array => array.slice(1).some(value => value !== null)) ||
+        this.hasNewGameResistances;
+  }
+
+  get hasNewGameResistances(): boolean {
+    return Object.values(this.stats.resistances).some(array =>
+        array !== null && array.slice(1).some(value => value !== null));
   }
 
   constructor() { }
