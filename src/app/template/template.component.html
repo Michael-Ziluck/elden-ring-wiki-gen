@@ -102,50 +102,58 @@
    </div>
    <div class="col-sm-6">
       <h4 class="special">Resistances</h4>
-      <ul>
-         <ng-container *ngTemplateOutlet="
-            resistance;
-            context: {
-              type: 'Poison',
-              value: stats.resistances.poison
-            }
-         "></ng-container>
-         <ng-container *ngTemplateOutlet="
-            resistance;
-            context: {
-              type: 'Scarlet Rot',
-              value: stats.resistances.scarletRot
-            }
-         "></ng-container>
-         <ng-container *ngTemplateOutlet="
-            resistance;
-            context: {
-              type: 'Hemorrhage',
-              value: stats.resistances.hemorrhage
-            }
-         "></ng-container>
-         <ng-container *ngTemplateOutlet="
-            resistance;
-            context: {
-              type: 'Frostbite',
-              value: stats.resistances.frostbite
-            }
-         "></ng-container>
-         <ng-container *ngTemplateOutlet="
-            resistance;
-            context: {
-              type: 'Sleep',
-              value: stats.resistances.sleep
-            }
-         "></ng-container>
-         <ng-container *ngTemplateOutlet="
-            resistance;
-            context: {
-              type: 'Madness',
-              value: stats.resistances.madness
-            }
-         "></ng-container>
-      </ul>
+      <div class="row">
+         <div class="col-sm-6">
+           <ul>
+             <ng-container *ngTemplateOutlet="
+                resistance;
+                context: {
+                  type: 'Poison',
+                  value: stats.resistances.poison
+                }
+             "></ng-container>
+             <ng-container *ngTemplateOutlet="
+                resistance;
+                context: {
+                  type: 'Scarlet Rot',
+                  value: stats.resistances.scarletRot
+                }
+             "></ng-container>
+             <ng-container *ngTemplateOutlet="
+                resistance;
+                context: {
+                  type: 'Hemorrhage',
+                  value: stats.resistances.hemorrhage
+                }
+             "></ng-container>
+             <ng-container *ngTemplateOutlet="
+                resistance;
+                context: {
+                  type: 'Frostbite',
+                  value: stats.resistances.frostbite
+                }
+             "></ng-container>
+           </ul>
+         </div>
+         <div class="col-sm-6">
+           <ul>
+             <ng-container *ngTemplateOutlet="
+                resistance;
+                context: {
+                  type: 'Sleep',
+                  value: stats.resistances.sleep
+                }
+             "></ng-container>
+             <ng-container *ngTemplateOutlet="
+                resistance;
+                context: {
+                  type: 'Madness',
+                  value: stats.resistances.madness
+                }
+             "></ng-container>
+           </ul>
+         </div>
+      </div>
       <p>
         The resistance numbers are the buildup amount to trigger it. For
         example, if a resistance is 100 you must deal 100 points of the given
