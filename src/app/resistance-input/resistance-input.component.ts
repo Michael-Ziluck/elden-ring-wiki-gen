@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Resistance } from '../combat-stats';
+import { findLastIndex } from '../utils';
 
 @Component({
   selector: '[resistance-input]',
@@ -77,19 +78,12 @@ export class ResistanceInputComponent {
   changeValue(i: number, j: number, value: number|null): void {
     this._values[i][j] = value;
     if (value === null) {
-      this._values[i].length = this.lastNonNull(this._values[i]) + 1;
+      this._values[i].length =
+          findLastIndex(this._values[i], value => value !== null) + 1;
     }
 
     this.markAsTouched();
     this.onChange(this.value);
-  }
-
-  // Returns the last index of a non-null value in `array`, or `-1`.
-  private lastNonNull(array: unknown[]): number {
-    for (let j = array.length - 1; j > -1; j--) {
-      if (array[j] !== null) return j;
-    }
-    return -1;
   }
 
   changeImmunity(notImmune: boolean): void {

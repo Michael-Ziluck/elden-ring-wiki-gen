@@ -1,5 +1,6 @@
 import { Component, Input, ElementRef, ViewChild } from '@angular/core';
 import { CombatStats } from '../combat-stats';
+import { findLastIndex } from '../utils';
 
 @Component({
   selector: 'app-template[stats]',
@@ -14,12 +15,6 @@ export class TemplateComponent {
 
   @ViewChild('wrapper') private wrapper!: ElementRef<HTMLElement>;
 
-  get showNewGameTable(): boolean {
-    return [this.stats.health, this.stats.defense, this.stats.runes]
-            .some(array => array.slice(1).some(value => value !== null)) ||
-        this.hasNewGameResistances;
-  }
-
   get hasNewGameResistances(): boolean {
     return Object.values(this.stats.resistances).some(array =>
         array !== null && array.slice(1).some(value => value.length > 0));
@@ -30,7 +25,18 @@ export class TemplateComponent {
         array !== null && array.some(child => child.length > 1));
   }
 
-  constructor() { }
+  get highestNewGame(): number {
+    const result = Math.max(
+      ...[
+        this.stats.health, this.stats.defense, this.stats.runes,
+      ].map(array => findLastIndex(array, value => !!value)),
+      ...Object.values(this.stats.resistances).map(array =>
+          array === null
+              ? 0
+              : findLastIndex(array, child => child.length > 0))
+    );
+    return result === -1 ? 0 : result;
+  }
 
   isArray(value: unknown): boolean {
     return value instanceof Array;

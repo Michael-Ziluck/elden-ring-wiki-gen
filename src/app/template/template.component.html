@@ -160,7 +160,7 @@
    </div>
 </div>
 
-<details open *ngIf="showNewGameTable">
+<details open *ngIf="highestNewGame > 0">
   <summary>NG+ and Beyond (click to expand)</summary>
   <div class="table-responsive">
     <table class="wiki_table">
@@ -168,13 +168,9 @@
         <tr>
           <th scope="col"></th>
           <th scope="col">NG</th>
-          <th scope="col">NG+</th>
-          <th scope="col">NG+2</th>
-          <th scope="col">NG+3</th>
-          <th scope="col">NG+4</th>
-          <th scope="col">NG+5</th>
-          <th scope="col">NG+6</th>
-          <th scope="col">NG+7</th>
+          <ng-container *ngFor="let _ of [].constructor(highestNewGame); let i = index">
+            <th scope="col">NG+{{i > 0 ? i + 1 : ''}}</th>
+          </ng-container>
       </thead>
       <tbody>
         <ng-container *ngTemplateOutlet="
@@ -322,7 +318,7 @@
 
     <ng-container *ngIf="data !== null; else other">
       <ng-container *ngFor='let i of [0, 1, 2, 3, 4, 5, 6, 7]'>
-        <td [style]="
+        <td *ngIf="i <= highestNewGame" [style]="
           isArray(data[i]) && data[i].length > 2
             ? data[i].length == 3
               ? 'font-size: 90%'
