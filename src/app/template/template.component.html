@@ -146,7 +146,17 @@
             }
          "></ng-container>
       </ul>
-      <p>The resistance numbers are the buildup amount to trigger it. For example, if a resistance is 100 you must deal 100 points of the given buildup to trigger it. Note that these go down over time, and increase each time the effect procs.</p>
+      <p>
+        The resistance numbers are the buildup amount to trigger it. For
+        example, if a resistance is 100 you must deal 100 points of the given
+        buildup to trigger it. Note that these go down over time, and increase
+        each time the effect procs.
+
+        <ng-container *ngIf="hasMultipleResistanceProcs">
+          The values after the "/"s indicate the increased resistances after
+          each successive proc.
+        </ng-container>
+      </p>
    </div>
 </div>
 
@@ -281,7 +291,13 @@
           attr.data-mce-src="/file/Elden-Ring/{{type | lowercase}}_status_effect_elden_ring_wiki_guide_25px.png"
       >{{type}}</a>:
     <strong>
-      <ng-container *ngIf="value !== null; else other">{{value[0]}}</ng-container>
+      <ng-container *ngIf="value !== null; else other">
+        <ng-container *ngTemplateOutlet="
+          resistanceNumbers;
+          context: {numbers: value[0]}
+        ">
+        </ng-container>
+      </ng-container>
       <ng-template #other>Immune</ng-template>
     </strong>
   </li>
@@ -306,13 +322,39 @@
 
     <ng-container *ngIf="data !== null; else other">
       <ng-container *ngFor='let i of [0, 1, 2, 3, 4, 5, 6, 7]'>
-        <td>{{data[i]}}</td>
+        <td [style]="
+          isArray(data[i]) && data[i].length > 2
+            ? data[i].length == 3
+              ? 'font-size: 90%'
+              : 'font-size: 80%'
+            : null
+        ">
+          <ng-container *ngIf="isArray(data[i]); else other">
+            <ng-container *ngTemplateOutlet="
+              resistanceNumbers;
+              context: {numbers: data[i]}
+            "></ng-container>
+          </ng-container>
+          <ng-template #other>{{data[i]}}</ng-template>
+        </td>
       </ng-container>
     </ng-container>
     <ng-template #other>
       <td colspan="8" style="text-align: center;"><strong>Immune</strong></td>
     </ng-template>
   </tr>
+</ng-template>
+
+<ng-template #resistanceNumbers let-numbers="numbers">
+  <ng-container *ngFor="let number of numbers; index as i">
+    <ng-container *ngIf="i !== 0">/</ng-container>
+    <ng-container *ngIf="number !== null; else other">
+      {{number}}
+    </ng-container>
+    <ng-template #other>
+      ???
+    </ng-template>
+  </ng-container>
 </ng-template>
 
 <ng-template #immune><strong>Immune</strong></ng-template>

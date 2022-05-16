@@ -35,11 +35,11 @@ export class AppComponent {
       }),
     }),
     resistances: this.fb.group({
-      poison: [[100]],
-      scarletRot: [[100]],
-      hemorrhage: [[100]],
-      frostbite: [[100]],
-      sleep: [[100]],
+      poison: [[[100], [], [], [], [], [], [], []]],
+      scarletRot: [[[100], [], [], [], [], [], [], []]],
+      hemorrhage: [[[100], [], [], [], [], [], [], []]],
+      frostbite: [[[100], [], [], [], [], [], [], []]],
+      sleep: [[[100], [], [], [], [], [], [], []]],
       madness: [null],
     }),
   });

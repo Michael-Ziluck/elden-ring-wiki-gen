@@ -1,9 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Resistance } from '../combat-stats';
 
 @Component({
   selector: '[resistance-input]',
   templateUrl: './resistance-input.component.html',
+  styleUrls: ['./resistance-input.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -16,7 +18,7 @@ export class ResistanceInputComponent {
 
   @Input() name!: string;
 
-  onChange = (quantity: Array<number|null>|null) => {};
+  onChange = (quantity: Resistance) => {};
 
   onTouched = () => {};
 
@@ -24,15 +26,15 @@ export class ResistanceInputComponent {
 
   disabled = false;
 
-  _values: Array<number|null> = [];
+  _values: Array<Array<number|null>> = [[], [], [], [], [], [], [], []];
 
   _immune = false;
 
-  get value(): Array<number|null>|null {
+  get value(): Array<Array<number|null>>|null {
     return this._immune ? null : this._values;
   }
 
-  set value(value: Array<number|null>|null) {
+  set value(value: Array<Array<number|null>>|null) {
     if (value !== null) {
       this._values = value;
       this._immune = false;
@@ -43,7 +45,7 @@ export class ResistanceInputComponent {
 
   constructor() { }
 
-  writeValue(quantity: Array<number|null>|null): void {
+  writeValue(quantity: Array<Array<number|null>>|null): void {
     this.value = quantity;
   }
 
@@ -66,10 +68,28 @@ export class ResistanceInputComponent {
     }
   }
 
-  changeValue(i: number, value: number|null): void {
-    this._values[i] = value;
+  numberOfValuesAtIndex(i: number): number {
+    const values = this.value;
+    if (values === null) return 0;
+    return 0;
+  }
+
+  changeValue(i: number, j: number, value: number|null): void {
+    this._values[i][j] = value;
+    if (value === null) {
+      this._values[i].length = this.lastNonNull(this._values[i]) + 1;
+    }
+
     this.markAsTouched();
     this.onChange(this.value);
+  }
+
+  // Returns the last index of a non-null value in `array`, or `-1`.
+  private lastNonNull(array: unknown[]): number {
+    for (let j = array.length - 1; j > -1; j--) {
+      if (array[j] !== null) return j;
+    }
+    return -1;
   }
 
   changeImmunity(notImmune: boolean): void {

@@ -1,4 +1,4 @@
-export type Resistance = Array<number|null>|null;
+export type Resistance = Array<Array<number|null>>|null;
 
 export interface CombatStats {
   name: string;

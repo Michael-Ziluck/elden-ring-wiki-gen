@@ -22,10 +22,19 @@ export class TemplateComponent {
 
   get hasNewGameResistances(): boolean {
     return Object.values(this.stats.resistances).some(array =>
-        array !== null && array.slice(1).some(value => value !== null));
+        array !== null && array.slice(1).some(value => value.length > 0));
+  }
+
+  get hasMultipleResistanceProcs(): boolean {
+    return Object.values(this.stats.resistances).some(array =>
+        array !== null && array.some(child => child.length > 1));
   }
 
   constructor() { }
+
+  isArray(value: unknown): boolean {
+    return value instanceof Array;
+  }
 
   async copyFormatted(): Promise<void> {
     // Details blocks should default to closed on Fextralife itself.
