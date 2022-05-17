@@ -1,3 +1,6 @@
+/// <reference types="gapi" />
+/// <reference types="gapi.client.sheets" />
+
 import { Component, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { BASE_TEMPLATE } from './base-template';
@@ -5,6 +8,17 @@ import { HighlightService } from './highlight.service';
 import { distinctUntilChanged } from 'rxjs';
 import { CombatStats } from './combat-stats';
 import { TemplateComponent } from './template/template.component';
+
+const GAPI_API_KEY = 'AIzaSyDEQkGI_2t7LXHP0qhSnEDmQgMzP1SqIcw';
+
+const GAPI_DISCOVERY_DOC =
+    'https://sheets.googleapis.com/$discovery/rest?version=v4';
+
+declare global {
+  interface Window {
+    gapiReady: Promise<void>;
+  }
+}
 
 @Component({
   selector: 'app-root',
@@ -44,11 +58,31 @@ export class AppComponent {
     }),
   });
 
+  private readonly gapiClient = new Promise(async resolve => {
+    (await this._waitForGapi()).load('client', () => {
+      resolve((async () => {
+        await gapi.client.init({
+          apiKey: GAPI_API_KEY,
+          discoveryDocs: [GAPI_DISCOVERY_DOC],
+        });
+        return gapi.client;
+      })());
+    });
+  });
+
   @ViewChild(TemplateComponent) template!: TemplateComponent;
 
   constructor(
     private fb: FormBuilder,
     private highlight: HighlightService,
   ) {
+  }
+
+  private _waitForGapi(): Promise<typeof gapi> {
+    if (gapi) return Promise.resolve(gapi);
+
+    return new Promise(resolve => {
+      setTimeout(() => resolve(this._waitForGapi()), 100);
+    });
   }
 }
