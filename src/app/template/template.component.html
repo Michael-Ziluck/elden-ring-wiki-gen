@@ -6,7 +6,7 @@
 
 <h3 class="bonfire">{{enemyName}} Combat information</h3>
 <ul>
-   <li>Health: <span style="color: #ffffff;" data-mce-style="color: #ffffff;"><strong>{{stats.health[0]}}</strong> HP</span></li>
+   <li>Health: <span style="color: #ffffff;" data-mce-style="color: #ffffff;"><strong>{{stats.health[0] | number}}</strong> HP</span></li>
    <li *ngIf="stats.defense[0]">
      Defense:
      <span style="color: #ffffff;" data-mce-style="color: #ffffff;">
@@ -21,7 +21,7 @@
        alt="Runes Icon"
        src="https://eldenring.wiki.fextralife.com/file/Elden-Ring/runes-currency-elden-ring-wiki-guide-18.png"
        attr.data-mce-src="/file/Elden-Ring/runes-currency-elden-ring-wiki-guide-18.png"
-     >{{stats.runes[0]}}
+     >{{stats.runes[0] | number}}
    </li>
 </ul>
 <div class="row">
@@ -183,7 +183,7 @@
       <tbody>
         <ng-container *ngTemplateOutlet="
           newGameRow;
-          context: {name: 'HP', data: stats.health}
+          context: {name: 'HP', data: stats.health, commas: true}
         "></ng-container>
         <ng-container *ngTemplateOutlet="
           newGameRow;
@@ -195,7 +195,8 @@
             name: 'Runes',
             data: stats.runes,
             link: '/Runes',
-            icon: '/file/Elden-Ring/runes-currency-elden-ring-wiki-guide-18.png'
+            icon: '/file/Elden-Ring/runes-currency-elden-ring-wiki-guide-18.png',
+            commas: true
           }
         "></ng-container>
         <ng-container *ngIf="hasNewGameResistances">
@@ -307,7 +308,8 @@
   </li>
 </ng-template>
 
-<ng-template #newGameRow let-name="name" let-data="data" let-link="link" let-icon="icon">
+<ng-template #newGameRow
+    let-name="name" let-data="data" let-link="link" let-icon="icon" let-commas="commas">
   <tr>
     <th scope="row">
       <ng-container *ngIf="link; else nameTemplate">
@@ -339,7 +341,7 @@
               context: {numbers: data[i]}
             "></ng-container>
           </ng-container>
-          <ng-template #other>{{data[i]}}</ng-template>
+          <ng-template #other>{{commas ? (data[i] | number) : data[i]}}</ng-template>
         </td>
       </ng-container>
     </ng-container>
