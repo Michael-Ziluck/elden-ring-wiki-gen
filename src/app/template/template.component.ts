@@ -55,7 +55,7 @@ export class TemplateComponent {
   async copyFormatted(): Promise<void> {
     // Details blocks should default to closed on Fextralife itself.
     const html = this.wrapper.nativeElement.innerHTML
-        .replace(/<details open>/, '<details>');
+        .replace(/<details ([^>]+ )?open="">/, '<details>');
 
     await navigator.clipboard.write([
       new ClipboardItem({
