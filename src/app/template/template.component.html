@@ -185,20 +185,24 @@
           newGameRow;
           context: {name: 'HP', data: stats.health, commas: true}
         "></ng-container>
-        <ng-container *ngTemplateOutlet="
-          newGameRow;
-          context: {name: 'Defense', data: stats.defense}
-        "></ng-container>
-        <ng-container *ngTemplateOutlet="
-          newGameRow;
-          context: {
-            name: 'Runes',
-            data: stats.runes,
-            link: '/Runes',
-            icon: '/file/Elden-Ring/runes-currency-elden-ring-wiki-guide-18.png',
-            commas: true
-          }
-        "></ng-container>
+        <ng-container *ngIf="hasNewGameValues(this.stats.defense)">
+          <ng-container *ngTemplateOutlet="
+            newGameRow;
+            context: {name: 'Defense', data: stats.defense}
+          "></ng-container>
+        </ng-container>
+        <ng-container *ngIf="hasNewGameValues(this.stats.runes)">
+          <ng-container *ngTemplateOutlet="
+            newGameRow;
+            context: {
+              name: 'Runes',
+              data: stats.runes,
+              link: '/Runes',
+              icon: '/file/Elden-Ring/runes-currency-elden-ring-wiki-guide-18.png',
+              commas: true
+            }
+          "></ng-container>
+        </ng-container>
         <ng-container *ngIf="hasNewGameResistances">
           <tr><th colspan="9"><h4>Resistances</h4></th></tr>
           <ng-container *ngTemplateOutlet="

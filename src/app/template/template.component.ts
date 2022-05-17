@@ -47,6 +47,11 @@ export class TemplateComponent {
     return value instanceof Array;
   }
 
+  hasNewGameValues(array?: unknown[]): boolean {
+    if (!array) return false;
+    return findLastIndex(array, value => !!value) > 0;
+  }
+
   async copyFormatted(): Promise<void> {
     // Details blocks should default to closed on Fextralife itself.
     const html = this.wrapper.nativeElement.innerHTML
