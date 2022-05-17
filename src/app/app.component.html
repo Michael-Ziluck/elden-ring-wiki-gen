@@ -6,7 +6,8 @@
       <label for="name-input" class="form-label">Name</label>
       <input type="text" class="form-control" id="name-input"
         formControlName="name" [matAutocomplete]="auto">
-      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayEnemyInfo">
+      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayEnemyInfo"
+          (optionSelected)="enemyInfoSelected($event)">
         <mat-option *ngFor="let option of filteredNames | async" [value]="option">
           {{option.name}}
         </mat-option>

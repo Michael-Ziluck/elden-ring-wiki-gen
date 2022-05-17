@@ -3,9 +3,11 @@
 
 import { Component, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
+import { Observable, mergeMap, startWith, map } from 'rxjs';
+import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+
 import { BASE_TEMPLATE } from './base-template';
 import { HighlightService } from './highlight.service';
-import { Observable, mergeMap, startWith, map } from 'rxjs';
 import { CombatStats } from './combat-stats';
 import { TemplateComponent } from './template/template.component';
 import { EnemyInfo } from './enemy-info';
@@ -114,6 +116,8 @@ export class AppComponent {
 
   filteredNames: Observable<EnemyInfo[]>;
 
+  @ViewChild(MatAutocomplete) autocomplete!: MatAutocomplete;
+
   @ViewChild(TemplateComponent) template!: TemplateComponent;
 
   constructor(
@@ -147,5 +151,84 @@ export class AppComponent {
     return new Promise(resolve => {
       setTimeout(() => resolve(this._waitForGapi()), 100);
     });
+  }
+
+  async enemyInfoSelected(event: MatAutocompleteSelectedEvent): Promise<void> {
+    const info = event.option.value as EnemyInfo;
+    const responses = await Promise.all(
+        ['Stat_Data', 'Stat_Data_(NG+)', 'Stat_Data_(NG+2)'].map(async sheet =>
+      await (await this.gapiClient).sheets.spreadsheets.values.get({
+        spreadsheetId: '1aujq95UfL_oUs3voPt3nGqM1hLhaVJOj6JKB6Np3FD8',
+        range: `${sheet}!A${info.rowIndex}:AX${info.rowIndex}`,
+      })));
+    const newGames = responses.map(response => {
+      const result = response.result.values;
+      return result ? result[0] : null;
+    });
+    if (newGames.some(newGame => !newGame)) return;
+
+    this.combatForm.controls['poise'].setValue(newGames[0]![17]);
+
+    const absorptions = this.combatForm.controls['absorptions'] as FormGroup;
+    const physical = absorptions.controls['physical'] as FormGroup;
+    physical.controls['standard'].setValue(newGames[0]![9]);
+    physical.controls['slash'].setValue(newGames[0]![10]);
+    physical.controls['strike'].setValue(newGames[0]![11]);
+    physical.controls['pierce'].setValue(newGames[0]![12]);
+
+    const elemental = absorptions.controls['magic'] as FormGroup;
+    elemental.controls['magic'].setValue(newGames[0]![13]);
+    elemental.controls['fire'].setValue(newGames[0]![14]);
+    elemental.controls['lightning'].setValue(newGames[0]![15]);
+    elemental.controls['holy'].setValue(newGames[0]![16]);
+
+    this.setNewGameValues('health', newGames as string[][], 7);
+    this.setNewGameValues('defense', newGames as string[][], 8);
+    if (newGames[0]![6] !== '0') {
+      this.setNewGameValues('runes', newGames as string[][], 6);
+    }
+
+    this.setResistance('poison', newGames as string[][], 0);
+    this.setResistance('scarletRot', newGames as string[][], 1);
+    this.setResistance('hemorrhage', newGames as string[][], 2);
+    this.setResistance('frostbite', newGames as string[][], 3);
+    this.setResistance('sleep', newGames as string[][], 4);
+  }
+
+  private setNewGameValues(
+      field: string, newGames: string[][], index: number): void {
+    this.combatForm.controls[field].setValue(
+        newGames.map(row => row[index].replace(/,/g, '')));
+  }
+
+  private setResistance(
+      field: string, newGames: string[][], offset: number): void {
+    const group = this.combatForm.controls['resistances'] as FormGroup;
+    const control = group.controls[field];
+    if (newGames[0][18 + offset] === 'IMMUNE') {
+      control.setValue(null);
+      return;
+    }
+
+    control.setValue([
+      this.resistancesForGame(newGames[0], 18 + offset),
+      ...[...new Array(7).keys()].map(i => {
+        const game = newGames[i + 1];
+        return game ? this.resistancesForGame(game, 9 + offset) : [];
+      })
+    ]);
+  }
+
+  private resistancesForGame(game: string[], index: number): string[] {
+    const values =
+        [game[index], game[index + 7], game[index + 12], game[index + 17]]
+            .map(value => value.replace(/,/g, ''));
+
+    while (values.length > 2 &&
+        values[values.length - 1] === values[values.length - 2]) {
+      values.length -= 1;
+    }
+
+    return values;
   }
 }
