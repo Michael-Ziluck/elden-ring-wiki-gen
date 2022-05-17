@@ -38,6 +38,11 @@ export class TemplateComponent {
     return result === -1 ? 0 : result;
   }
 
+  get enemyName(): string {
+    const name = this.stats.name;
+    return typeof name === 'string' ? name : name.friendlyName;
+  }
+
   isArray(value: unknown): boolean {
     return value instanceof Array;
   }

@@ -1,7 +1,9 @@
+import { EnemyInfo } from './enemy-info';
+
 export type Resistance = Array<Array<number|null>>|null;
 
 export interface CombatStats {
-  name: string;
+  name: string|EnemyInfo;
   health: Array<number|null>;
   defense: Array<number|null>;
   runes: Array<number|null>;

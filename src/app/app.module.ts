@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -21,6 +22,7 @@ import { NewGameRowInputComponent } from './new-game-row-input/new-game-row-inpu
   imports: [
     BrowserModule,
     FormsModule,
+    MatAutocompleteModule,
     NgbModule,
     ReactiveFormsModule,
   ],
