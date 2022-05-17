@@ -116,12 +116,13 @@
         </div>
       </div>
     </fieldset>
-    <div class="col-12">
-      <button type="submit" class="btn btn-primary" (click)="renderTemplate()">Output</button>
-    </div>
   </form>
 
-  <pre *ngIf="display"><code>
-    {{display}}
-  </code></pre>
+  <div class="copy row g-3 mt-1">
+    <div class="col-2">
+      <button type="submit" class="btn btn-primary" (click)="template.copyFormatted()">Copy Formatted</button>
+    </div>
+  </div>
+
+  <app-template [stats]="combatForm.value"></app-template>
 </div>
