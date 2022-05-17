@@ -299,16 +299,14 @@
           src="https://eldenring.wiki.fextralife.com/file/Elden-Ring/{{type | lowercase | replace:' ':'_'}}_status_effect_elden_ring_wiki_guide_25px.png"
           attr.data-mce-src="/file/Elden-Ring/{{type | lowercase}}_status_effect_elden_ring_wiki_guide_25px.png"
       >{{type}}</a>:
-    <strong>
-      <ng-container *ngIf="value !== null; else other">
-        <ng-container *ngTemplateOutlet="
-          resistanceNumbers;
-          context: {numbers: value[0]}
-        ">
-        </ng-container>
+    <ng-container *ngIf="value !== null; else other">
+      <ng-container *ngTemplateOutlet="
+        resistanceNumbers;
+        context: {numbers: value[0], strong: true}
+      ">
       </ng-container>
-      <ng-template #other>Immune</ng-template>
-    </strong>
+    </ng-container>
+    <ng-template #other><strong>Immune</strong></ng-template>
   </li>
 </ng-template>
 
@@ -342,7 +340,7 @@
           <ng-container *ngIf="isArray(data[i]); else other">
             <ng-container *ngTemplateOutlet="
               resistanceNumbers;
-              context: {numbers: data[i]}
+              context: {numbers: data[i], strong: false}
             "></ng-container>
           </ng-container>
           <ng-template #other>{{commas ? (data[i] | number) : data[i]}}</ng-template>
@@ -355,11 +353,14 @@
   </tr>
 </ng-template>
 
-<ng-template #resistanceNumbers let-numbers="numbers">
+<ng-template #resistanceNumbers let-numbers="numbers" let-strong="strong">
   <ng-container *ngFor="let number of numbers; index as i">
-    <ng-container *ngIf="i !== 0">/</ng-container>
+    <ng-container *ngIf="i !== 0"> / </ng-container>
     <ng-container *ngIf="number !== null; else other">
-      {{number}}
+      <ng-container *ngIf="strong; else normal">
+        <strong>{{number}}</strong>
+      </ng-container>
+      <ng-template #normal>{{number}}</ng-template>
     </ng-container>
     <ng-template #other>
       ???
