@@ -177,102 +177,104 @@
    </div>
 </div>
 
-<details open *ngIf="highestNewGame > 0">
-  <summary>NG+ and Beyond (click to expand)</summary>
-  <div class="table-responsive">
-    <table class="wiki_table">
-      <thead>
-        <tr>
-          <th scope="col"></th>
-          <th scope="col">NG</th>
-          <ng-container *ngFor="let _ of [].constructor(highestNewGame); let i = index">
-            <th scope="col">NG+{{i > 0 ? i + 1 : ''}}</th>
+<div>
+  <details open *ngIf="highestNewGame > 0">
+    <summary>NG+ and Beyond (click to expand)</summary>
+    <div class="table-responsive">
+      <table class="wiki_table">
+        <thead>
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">NG</th>
+            <ng-container *ngFor="let _ of [].constructor(highestNewGame); let i = index">
+              <th scope="col">NG+{{i > 0 ? i + 1 : ''}}</th>
+            </ng-container>
+        </thead>
+        <tbody>
+          <ng-container *ngTemplateOutlet="
+            newGameRow;
+            context: {name: 'HP', data: stats.health, commas: true}
+          "></ng-container>
+          <ng-container *ngIf="hasNewGameValues(this.stats.defense)">
+            <ng-container *ngTemplateOutlet="
+              newGameRow;
+              context: {name: 'Defense', data: stats.defense}
+            "></ng-container>
           </ng-container>
-      </thead>
-      <tbody>
-        <ng-container *ngTemplateOutlet="
-          newGameRow;
-          context: {name: 'HP', data: stats.health, commas: true}
-        "></ng-container>
-        <ng-container *ngIf="hasNewGameValues(this.stats.defense)">
-          <ng-container *ngTemplateOutlet="
-            newGameRow;
-            context: {name: 'Defense', data: stats.defense}
-          "></ng-container>
-        </ng-container>
-        <ng-container *ngIf="hasNewGameValues(this.stats.runes)">
-          <ng-container *ngTemplateOutlet="
-            newGameRow;
-            context: {
-              name: 'Runes',
-              data: stats.runes,
-              link: '/Runes',
-              icon: '/file/Elden-Ring/runes-currency-elden-ring-wiki-guide-18.png',
-              commas: true
-            }
-          "></ng-container>
-        </ng-container>
-        <ng-container *ngIf="hasNewGameResistances">
-          <tr><th colspan="9"><h4>Resistances</h4></th></tr>
-          <ng-container *ngTemplateOutlet="
-            newGameRow;
-            context: {
-              name: 'Poison',
-              data: stats.resistances.poison,
-              link: '/Poison',
-              icon: '/file/Elden-Ring/poison_status_effect_elden_ring_wiki_guide_25px.png'
-            }
-          "></ng-container>
-          <ng-container *ngTemplateOutlet="
-            newGameRow;
-            context: {
-              name: 'Scarlet Rot',
-              data: stats.resistances.scarletRot,
-              link: '/Scarlet+Rot',
-              icon: '/file/Elden-Ring/scarlet_rot_status_effect_elden_ring_wiki_guide_25px.png'
-            }
-          "></ng-container>
-          <ng-container *ngTemplateOutlet="
-            newGameRow;
-            context: {
-              name: 'Hemorrhage',
-              data: stats.resistances.hemorrhage,
-              link: '/Hemorrhage',
-              icon: '/file/Elden-Ring/hemorrhage_status_effect_elden_ring_wiki_guide_25px.png'
-            }
-          "></ng-container>
-          <ng-container *ngTemplateOutlet="
-            newGameRow;
-            context: {
-              name: 'Frostbite',
-              data: stats.resistances.frostbite,
-              link: '/Frostbite',
-              icon: '/file/Elden-Ring/frostbite_status_effect_elden_ring_wiki_guide_25px.png'
-            }
-          "></ng-container>
-          <ng-container *ngTemplateOutlet="
-            newGameRow;
-            context: {
-              name: 'Sleep',
-              data: stats.resistances.sleep,
-              link: '/Sleep',
-              icon: '/file/Elden-Ring/sleep_status_effect_elden_ring_wiki_guide_25px.png'
-            }
-          "></ng-container>
-          <ng-container *ngTemplateOutlet="
-            newGameRow;
-            context: {
-              name: 'Madness',
-              data: stats.resistances.madness,
-              link: '/Madness',
-              icon: '/file/Elden-Ring/madness_status_effect_elden_ring_wiki_guide_25px.png'
-            }
-          "></ng-container>
-        </ng-container>
-      </tbody>
-    </table>
-  </div>
-</details>
+          <ng-container *ngIf="hasNewGameValues(this.stats.runes)">
+            <ng-container *ngTemplateOutlet="
+              newGameRow;
+              context: {
+                name: 'Runes',
+                data: stats.runes,
+                link: '/Runes',
+                icon: '/file/Elden-Ring/runes-currency-elden-ring-wiki-guide-18.png',
+                commas: true
+              }
+            "></ng-container>
+          </ng-container>
+          <ng-container *ngIf="hasNewGameResistances">
+            <tr><th colspan="9"><h4>Resistances</h4></th></tr>
+            <ng-container *ngTemplateOutlet="
+              newGameRow;
+              context: {
+                name: 'Poison',
+                data: stats.resistances.poison,
+                link: '/Poison',
+                icon: '/file/Elden-Ring/poison_status_effect_elden_ring_wiki_guide_25px.png'
+              }
+            "></ng-container>
+            <ng-container *ngTemplateOutlet="
+              newGameRow;
+              context: {
+                name: 'Scarlet Rot',
+                data: stats.resistances.scarletRot,
+                link: '/Scarlet+Rot',
+                icon: '/file/Elden-Ring/scarlet_rot_status_effect_elden_ring_wiki_guide_25px.png'
+              }
+            "></ng-container>
+            <ng-container *ngTemplateOutlet="
+              newGameRow;
+              context: {
+                name: 'Hemorrhage',
+                data: stats.resistances.hemorrhage,
+                link: '/Hemorrhage',
+                icon: '/file/Elden-Ring/hemorrhage_status_effect_elden_ring_wiki_guide_25px.png'
+              }
+            "></ng-container>
+            <ng-container *ngTemplateOutlet="
+              newGameRow;
+              context: {
+                name: 'Frostbite',
+                data: stats.resistances.frostbite,
+                link: '/Frostbite',
+                icon: '/file/Elden-Ring/frostbite_status_effect_elden_ring_wiki_guide_25px.png'
+              }
+            "></ng-container>
+            <ng-container *ngTemplateOutlet="
+              newGameRow;
+              context: {
+                name: 'Sleep',
+                data: stats.resistances.sleep,
+                link: '/Sleep',
+                icon: '/file/Elden-Ring/sleep_status_effect_elden_ring_wiki_guide_25px.png'
+              }
+            "></ng-container>
+            <ng-container *ngTemplateOutlet="
+              newGameRow;
+              context: {
+                name: 'Madness',
+                data: stats.resistances.madness,
+                link: '/Madness',
+                icon: '/file/Elden-Ring/madness_status_effect_elden_ring_wiki_guide_25px.png'
+              }
+            "></ng-container>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+  </details>
+</div>
 </div>
 
 <ng-template #physicalNegation let-type="type" let-value="value">
