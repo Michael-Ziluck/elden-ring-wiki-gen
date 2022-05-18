@@ -53,12 +53,7 @@ export class TemplateComponent {
   }
 
   async copyFormatted(): Promise<void> {
-    const html = this.wrapper.nativeElement.innerHTML
-        // Details blocks should default to closed on Fextralife itself.
-        .replace(/<details ([^>]+ )?open="">/g, '<details>')
-        // Angular adds a bunch of comments that we don't need.
-        .replace(/<!--(.|\n)*?-->/mg, '');
-
+    const html = this.htmlToCopy();
     await navigator.clipboard.write([
       new ClipboardItem({
         "text/html": new Blob([html], {type: "text/html"}),
@@ -68,6 +63,29 @@ export class TemplateComponent {
 
     this.copied = true;
     setTimeout(() => this.copied = false, 2000);
+  }
+
+  async copyHtml(): Promise<void> {
+    const html = this.htmlToCopy();
+    await navigator.clipboard.write([
+      new ClipboardItem({
+        "text/plain": new Blob([html], {type: "text/plain"}),
+      })
+    ]);
+
+    this.copied = true;
+    setTimeout(() => this.copied = false, 2000);
+  }
+
+  private htmlToCopy(): string {
+    return this.wrapper.nativeElement.innerHTML
+        // Details blocks should default to closed on Fextralife itself.
+        .replace(/<details ([^>]+ )?open="">/g, '<details>')
+        // Angular adds a bunch of comments that we don't need.
+        .replace(/<!--(.|\n)*?-->/mg, '')
+        // Magic Angular attributes. Fextralife's editor will strip these
+        // anyway, but it makes the copy smaller and cleaner.
+        .replace(/ _ng[a-z0-9-]+=""/g, '');
   }
 
 }
