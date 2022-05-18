@@ -7,7 +7,6 @@ import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TemplateComponent } from './template/template.component';
-import { ReplacePipe } from './replace-pipe';
 import { ResistanceInputComponent } from './resistance-input/resistance-input.component';
 import { NewGameRowInputComponent } from './new-game-row-input/new-game-row-input.component';
 
@@ -15,7 +14,6 @@ import { NewGameRowInputComponent } from './new-game-row-input/new-game-row-inpu
   declarations: [
     AppComponent,
     TemplateComponent,
-    ReplacePipe,
     ResistanceInputComponent,
     NewGameRowInputComponent
   ],

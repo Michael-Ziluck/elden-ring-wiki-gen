@@ -67,7 +67,8 @@
                   context: {
                     type: 'Magic',
                     value: stats.absorptions.magic.magic,
-                    color: '#3fbddd'
+                    color: '#3fbddd',
+                    icon: '/file/Elden-Ring/magic-upgrades-elden-ring-wiki-guide-30.png'
                   }
                "></ng-container>
                <ng-container *ngTemplateOutlet="
@@ -75,7 +76,8 @@
                   context: {
                     type: 'Fire',
                     value: stats.absorptions.magic.fire,
-                    color: '#cc9d57'
+                    color: '#cc9d57',
+                    icon: '/file/Elden-Ring/fire-upgrades-elden-ring-wiki-guide-30.png'
                   }
                "></ng-container>
                <ng-container *ngTemplateOutlet="
@@ -83,7 +85,8 @@
                   context: {
                     type: 'Lightning',
                     value: stats.absorptions.magic.lightning,
-                    color: '#d5d559'
+                    color: '#d5d559',
+                    icon: '/file/Elden-Ring/lightning-upgrades-elden-ring-wiki-guide-30.png'
                   }
                "></ng-container>
                <ng-container *ngTemplateOutlet="
@@ -109,28 +112,32 @@
                 resistance;
                 context: {
                   type: 'Poison',
-                  value: stats.resistances.poison
+                  value: stats.resistances.poison,
+                  icon: '/file/Elden-Ring/poison_status_effect_elden_ring_wiki_guide_25px.png'
                 }
              "></ng-container>
              <ng-container *ngTemplateOutlet="
                 resistance;
                 context: {
                   type: 'Scarlet Rot',
-                  value: stats.resistances.scarletRot
+                  value: stats.resistances.scarletRot,
+                  icon: '/file/Elden-Ring/scarlet_rot_status_effect_elden_ring_wiki_guide_25px.png'
                 }
              "></ng-container>
              <ng-container *ngTemplateOutlet="
                 resistance;
                 context: {
                   type: 'Hemorrhage',
-                  value: stats.resistances.hemorrhage
+                  value: stats.resistances.hemorrhage,
+                  icon: '/file/Elden-Ring/hemorrhage_status_effect_elden_ring_wiki_guide_25px.png'
                 }
              "></ng-container>
              <ng-container *ngTemplateOutlet="
                 resistance;
                 context: {
                   type: 'Frostbite',
-                  value: stats.resistances.frostbite
+                  value: stats.resistances.frostbite,
+                  icon: '/file/Elden-Ring/frostbite_status_effect_elden_ring_wiki_guide_25px.png'
                 }
              "></ng-container>
            </ul>
@@ -141,14 +148,16 @@
                 resistance;
                 context: {
                   type: 'Sleep',
-                  value: stats.resistances.sleep
+                  value: stats.resistances.sleep,
+                  icon: '/file/Elden-Ring/sleep_status_effect_elden_ring_wiki_guide_25px.png'
                 }
              "></ng-container>
              <ng-container *ngTemplateOutlet="
                 resistance;
                 context: {
                   type: 'Madness',
-                  value: stats.resistances.madness
+                  value: stats.resistances.madness,
+                  icon: '/file/Elden-Ring/madness_status_effect_elden_ring_wiki_guide_25px.png'
                 }
              "></ng-container>
            </ul>
@@ -284,20 +293,20 @@
         href="https://eldenring.wiki.fextralife.com/{{type}}+Damage"
         attr.data-mce-href="/{{type}}+Damage">
       <img title="{{type}} Icon" alt="{{type}} Icon" width="20" height="20"
-          src="https://eldenring.wiki.fextralife.com/{{icon || 'file/Elden-Ring/' + (type | lowercase) + '-upgrades-elden-ring-wiki-guide-30.png'}}"
-          data-mce-src="/file/Elden-Ring/magic-upgrades-elden-ring-wiki-guide-30.png"
+          src="https://eldenring.wiki.fextralife.com{{icon}}"
+          attr.data-mce-src="{{icon}}"
       >{{type}}</a>:
     <strong>{{value}}</strong>
   </li>
 </ng-template>
 
-<ng-template #resistance let-type="type" let-value="value" let-immune="immune">
+<ng-template #resistance let-type="type" let-value="value" let-immune="immune" let-icon="icon">
   <li>
     <a class="wiki_link" title="{{type}}" attr.data-mce-href="/{{type}}"
         href="https://eldenring.wiki.fextralife.com/{{type}}">
       <img title="{{type}} Icon" alt="{{type}} Icon" width="20"
-          src="https://eldenring.wiki.fextralife.com/file/Elden-Ring/{{type | lowercase | replace:' ':'_'}}_status_effect_elden_ring_wiki_guide_25px.png"
-          attr.data-mce-src="/file/Elden-Ring/{{type | lowercase}}_status_effect_elden_ring_wiki_guide_25px.png"
+          src="https://eldenring.wiki.fextralife.com{{icon}}"
+          attr.data-mce-src="{{icon}}"
       >{{type}}</a>:
     <ng-container *ngIf="value !== null; else other">
       <ng-container *ngTemplateOutlet="
