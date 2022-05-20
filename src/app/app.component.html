@@ -4,13 +4,16 @@
   <form [formGroup]="combatForm" class="row g-3">
     <div class="col-md-12">
       <label for="name-input" class="form-label">Name</label>
-      <input type="text" class="form-control" id="name-input" formControlName="name">
+      <input type="text" class="form-control" id="name-input"
+        formControlName="name" [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayEnemyInfo"
+          (optionSelected)="enemyInfoSelected($event)">
+        <mat-option *ngFor="let option of filteredNames | async" [value]="option">
+          {{option.name}}
+        </mat-option>
+      </mat-autocomplete>
     </div>
-    <div class="col-md-6">
-      <label for="health-input" class="form-label">Health</label>
-      <input type="number" class="form-control" id="health-input" formControlName="health">
-    </div>
-    <div class="col-md-6">
+    <div class="col-md-12">
       <label for="poise-input" class="form-label">Poise</label>
       <input type="number" class="form-control" id="poise-input" formControlName="poise">
     </div>
@@ -59,68 +62,44 @@
       </div>
     </fieldset>
     <!--Resistances-->
-    <fieldset formGroupName="resistances" class="row mt-3">
-      <h4>Resistances</h4>
-      <div class="col-md-6">
-        <label for="poison-input" class="form-label">Poison</label>
-        <div class="input-group">
-          <input type="number" class="form-control" id="poison-input" formControlName="poison">
-          <div class="input-group-text">
-            <input class="form-check-input mt-0" type="checkbox" formControlName="poisonImmune">
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <label for="scarlet-rot-input" class="form-label">Scarlet Rot</label>
-        <div class="input-group">
-          <input type="number" class="form-control" id="scarlet-rot-input" formControlName="scarletRot">
-          <div class="input-group-text">
-            <input class="form-check-input mt-0" type="checkbox" formControlName="scarletRotImmune">
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <label for="hemorrhage-input" class="form-label">Hemorrhage</label>
-        <div class="input-group">
-          <input type="number" class="form-control" id="hemorrhage-input" formControlName="hemorrhage">
-          <div class="input-group-text">
-            <input class="form-check-input mt-0" type="checkbox" formControlName="hemorrhageImmune">
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <label for="frostbite-input" class="form-label">Frostbite</label>
-        <div class="input-group">
-          <input type="number" class="form-control" id="frostbite-input" formControlName="frostbite">
-          <div class="input-group-text">
-            <input class="form-check-input mt-0" type="checkbox" formControlName="frostbiteImmune">
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <label for="sleep-input" class="form-label">Sleep</label>
-        <div class="input-group">
-          <input type="number" class="form-control" id="sleep-input" formControlName="sleep">
-          <div class="input-group-text">
-            <input class="form-check-input mt-0" type="checkbox" formControlName="sleepImmune">
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <label for="madness-input" class="form-label">Madness</label>
-        <div class="input-group">
-          <input type="number" class="form-control" id="madness-input" formControlName="madness">
-          <div class="input-group-text">
-            <input class="form-check-input mt-0" type="checkbox" formControlName="madnessImmune">
-          </div>
-        </div>
-      </div>
-    </fieldset>
+    <table>
+      <thead>
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">NG</th>
+          <th scope="col">NG+</th>
+          <th scope="col">NG+2</th>
+          <th scope="col">NG+3</th>
+          <th scope="col">NG+4</th>
+          <th scope="col">NG+5</th>
+          <th scope="col">NG+6</th>
+          <th scope="col">NG+7</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr formControlName="health" new-game-row-input name="HP"></tr>
+        <tr formControlName="defense" new-game-row-input name="Defense"></tr>
+        <tr formControlName="runes" new-game-row-input name="Runes"></tr>
+        <tr><th colspan="8">Resistances</th></tr>
+        <ng-container formGroupName="resistances">
+          <tr resistance-input formControlName="poison" name="Poison"></tr>
+          <tr resistance-input formControlName="scarletRot" name="Scarlet Rot"></tr>
+          <tr resistance-input formControlName="hemorrhage" name="Hemorrhage"></tr>
+          <tr resistance-input formControlName="frostbite" name="Frostbite"></tr>
+          <tr resistance-input formControlName="sleep" name="Sleep"></tr>
+          <tr resistance-input formControlName="madness" name="Madness"></tr>
+        </ng-container>
+      </tbody>
+    </table>
   </form>
 
   <div class="copy row g-3 mt-1">
     <div class="col-2">
       <button type="submit" class="btn btn-primary" (click)="template.copyFormatted()">Copy Formatted</button>
+    </div>
+
+    <div class="col-2">
+      <button type="submit" class="btn btn-secondary" (click)="template.copyHtml()">Copy HTML</button>
     </div>
   </div>
 

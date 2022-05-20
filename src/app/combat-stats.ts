@@ -1,6 +1,12 @@
+import { EnemyInfo } from './enemy-info';
+
+export type Resistance = Array<Array<number|null>>|null;
+
 export interface CombatStats {
-  name: string;
-  health: number;
+  name: string|EnemyInfo;
+  health: Array<number|null>;
+  defense: Array<number|null>;
+  runes: Array<number|null>;
   poise: number;
   absorptions: {
     physical: {
@@ -17,17 +23,11 @@ export interface CombatStats {
     },
   };
   resistances: {
-    poison: number,
-    scarletRot: number,
-    hemorrhage: number,
-    frostbite: number,
-    sleep: number,
-    madness: number,
-    poisonImmune: boolean,
-    scarletRotImmune: boolean,
-    hemorrhageImmune: boolean,
-    frostbiteImmune: boolean,
-    sleepImmune: boolean,
-    madnessImmune: boolean,
+    poison: Resistance,
+    scarletRot: Resistance,
+    hemorrhage: Resistance,
+    frostbite: Resistance,
+    sleep: Resistance,
+    madness: Resistance,
   };
 }

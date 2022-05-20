@@ -1,0 +1,23 @@
+<th scope="row">
+  {{name}}
+
+  <input class="form-check-input" type="checkbox"
+     [attr.disabled]="disabled ? '' : null"
+     [ngModel]="!_immune" (ngModelChange)="changeImmunity($event)">
+</th>
+
+<ng-container *ngFor='let i of [0, 1, 2, 3, 4, 5, 6, 7]'>
+  <td>
+    <div class="form-control" [attr.readonly]="disabled || _immune ? '' : null">
+      <div class="numbers" [attr.data-length]="value ? value[i].length : 0">
+        <ng-container *ngFor='let j of [0, 1, 2, 3]'>
+          <span class="spacer" *ngIf="j !== 0">/</span>
+          <input type="number"
+             [attr.disabled]="disabled || _immune ? '' : null"
+             [ngModel]="value ? value[i][j] : null"
+             (ngModelChange)="changeValue(i, j, $event)">
+        </ng-container>
+      </div>
+    </div>
+  </td>
+</ng-container>

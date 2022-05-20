@@ -1,0 +1,8 @@
+<th scope="row">{{name}}</th>
+<ng-container *ngFor='let i of [0, 1, 2, 3, 4, 5, 6, 7]'>
+  <td>
+    <input class="form-control" type="number" [ngModel]="value[i]"
+      (ngModelChange)="changeValue(i, $event)"
+      [attr.disabled]="disabled ? '' : null">
+  </td>
+</ng-container>

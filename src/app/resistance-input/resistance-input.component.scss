@@ -1,0 +1,96 @@
+th {
+  padding-right: 10px;
+  width: 10%;
+}
+
+td {
+  width: 10%;
+}
+
+input[type=checkbox] {
+  float: right;
+}
+
+.form-control:focus-within {
+  color: #212529;
+  background-color: #fff;
+  border-color: #86b7fe;
+  outline: 0;
+  box-shadow: 0 0 0 0.25rem rgb(13 110 253 / 25%);
+}
+
+.numbers {
+  display: inline-flex;
+
+  &[data-length="0"] {
+    :nth-child(n+2) {
+      display: none;
+    }
+  }
+
+  &[data-length="1"] {
+    input:nth-of-type(n+2) {
+      flex-grow: 0;
+      width: 1%;
+    }
+
+    .spacer:nth-of-type(n+2), input:nth-of-type(n+3) {
+      display: none;
+    }
+  }
+
+  &[data-length="2"], &[data-length="3"], &[data-length="4"] {
+    input {
+      text-align: center;
+    }
+  }
+
+  &[data-length="2"] {
+    input:nth-of-type(3) {
+      flex-grow: 0;
+      width: 1%;
+    }
+
+    .spacer:nth-of-type(n+3), input:nth-of-type(4) {
+      display: none;
+    }
+  }
+
+  &[data-length="3"] {
+    spacer, input {
+      font-size: 80%;
+    }
+
+    input:nth-of-type(n+4) {
+      flex-grow: 0;
+      width: 1%;
+    }
+c
+    .spacer:nth-of-type(n+4) {
+      display: none;
+    }
+  }
+
+  &[data-length="4"] {
+    spacer, input {
+      font-size: 65%;
+    }
+  }
+}
+
+input[type=number] {
+  flex-grow: 1;
+  border: none;
+  background: none;
+  padding: 0;
+  outline: none;
+  font: inherit;
+  -moz-appearance:textfield;
+  width: 20%;
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+  }
+}
