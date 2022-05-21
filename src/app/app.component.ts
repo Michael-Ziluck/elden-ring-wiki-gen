@@ -155,8 +155,11 @@ export class AppComponent {
 
   async enemyInfoSelected(event: MatAutocompleteSelectedEvent): Promise<void> {
     const info = event.option.value as EnemyInfo;
-    const responses = await Promise.all(
-        ['Stat_Data', 'Stat_Data_(NG+)', 'Stat_Data_(NG+2)'].map(async sheet =>
+    const responses = await Promise.all([
+      'Stat_Data',
+      'Stat_Data_(NG+)',
+      ...[...new Array(6).keys()].map(i => `Stat_Data_(NG+${i + 2})`)
+    ].map(async sheet =>
       await (await this.gapiClient).sheets.spreadsheets.values.get({
         spreadsheetId: '1aujq95UfL_oUs3voPt3nGqM1hLhaVJOj6JKB6Np3FD8',
         range: `${sheet}!A${info.rowIndex}:AX${info.rowIndex}`,
