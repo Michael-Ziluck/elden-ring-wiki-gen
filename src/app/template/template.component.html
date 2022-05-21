@@ -368,7 +368,7 @@
 
 <ng-template #resistanceNumbers let-numbers="numbers" let-strong="strong">
   <ng-container *ngFor="let number of numbers; index as i">
-    <ng-container *ngIf="i !== 0"> / </ng-container>
+    <ng-container *ngIf="i !== 0">&nbsp;/ </ng-container>
     <ng-container *ngIf="number !== null; else other">
       <ng-container *ngIf="strong; else normal">
         <strong>{{number}}</strong>
