@@ -36,7 +36,7 @@ export class AppComponent {
     health: [[0]],
     defense: [[]],
     runes: [[]],
-    poise: [0],
+    stance: [0],
     absorptions: this.fb.group({
       physical: this.fb.group({
         standard: [0],
@@ -174,7 +174,7 @@ export class AppComponent {
     });
     if (newGames.some(newGame => !newGame)) return;
 
-    this.combatForm.controls['poise'].setValue(newGames[0]![17]);
+    this.combatForm.controls['stance'].setValue(newGames[0]![17]);
 
     const absorptions = this.combatForm.controls['absorptions'] as FormGroup;
     const physical = absorptions.controls['physical'] as FormGroup;

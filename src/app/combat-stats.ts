@@ -7,7 +7,7 @@ export interface CombatStats {
   health: Array<number|null>;
   defense: Array<number|null>;
   runes: Array<number|null>;
-  poise: number;
+  stance: number;
   absorptions: {
     physical: {
       standard: number,
