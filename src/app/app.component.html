@@ -93,6 +93,21 @@
     </table>
   </form>
 
+  <form [formGroup]="displayForm" class="row g-3 mt-1">
+    <div class="col-md-2 form-check">
+      <input class="form-check-input" type="radio" id="display-full" formControlName="display" value="full">
+      <label class="form-check-label" for="display-full">Full Information</label>
+    </div>
+    <div class="col-md-3 form-check">
+      <input class="form-check-input" type="radio" id="display-cross-enemy" formControlName="display" value="cross-enemy">
+      <label class="form-check-label" for="display-cross-enemy">Cross-Enemy Information</label>
+    </div>
+    <div class="col-md-3 form-check">
+      <input class="form-check-input" type="radio" id="display-enemy-specific" formControlName="display" value="enemy-specific">
+      <label class="form-check-label" for="display-enemy-specific">Enemy-Specific Information</label>
+    </div>
+  </form>
+
   <div class="copy row g-3 mt-1">
     <div class="col-2">
       <button type="submit" class="btn btn-primary" (click)="template.copyFormatted()">Copy Formatted</button>
@@ -103,5 +118,5 @@
     </div>
   </div>
 
-  <app-template [stats]="combatForm.value"></app-template>
+  <app-template [stats]="combatForm.value" [display]="displayForm.value.display"></app-template>
 </div>

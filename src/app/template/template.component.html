@@ -6,26 +6,37 @@
 
 <h3 class="bonfire">{{enemyName}} Combat information</h3>
 <ul>
-   <li>Health: <span style="color: #ffffff;" data-mce-style="color: #ffffff;"><strong>{{stats.health[0] | number}}</strong> HP</span></li>
-   <li *ngIf="stats.defense[0]">
-     Defense:
-     <span style="color: #ffffff;" data-mce-style="color: #ffffff;">
-       <strong>{{stats.defense[0]}}</strong>
-     </span>
-   </li>
-   <li>Poise: <span style="color: #ffffff;" data-mce-style="color: #ffffff;"><strong>{{stats.poise}}</strong></span></li>
-   <li *ngIf="stats.runes[0]">
-     Drops
-     <img
-       title="Runes Icon"
-       alt="Runes Icon"
-       src="https://eldenring.wiki.fextralife.com/file/Elden-Ring/runes-currency-elden-ring-wiki-guide-18.png"
-       attr.data-mce-src="/file/Elden-Ring/runes-currency-elden-ring-wiki-guide-18.png"
-     >{{stats.runes[0] | number}}
-   </li>
+  <li *ngIf="showEnemySpecific">
+    Health:
+    <span style="color: #ffffff;" data-mce-style="color: #ffffff;">
+      <strong>{{stats.health[0] | number}}</strong>
+      HP
+    </span>
+  </li>
+  <li *ngIf="showEnemySpecific && stats.defense[0]">
+    Defense:
+    <span style="color: #ffffff;" data-mce-style="color: #ffffff;">
+      <strong>{{stats.defense[0]}}</strong>
+    </span>
+  </li>
+  <li *ngIf="showCrossEnemy">
+    Poise:
+    <span style="color: #ffffff;" data-mce-style="color: #ffffff;">
+      <strong>{{stats.poise}}</strong>
+    </span>
+  </li>
+  <li *ngIf="showEnemySpecific && stats.runes[0]">
+    Drops
+    <img
+      title="Runes Icon"
+      alt="Runes Icon"
+      src="https://eldenring.wiki.fextralife.com/file/Elden-Ring/runes-currency-elden-ring-wiki-guide-18.png"
+      attr.data-mce-src="/file/Elden-Ring/runes-currency-elden-ring-wiki-guide-18.png"
+    >{{stats.runes[0] | number}}
+  </li>
 </ul>
 <div class="row">
-   <div class="col-sm-6">
+   <div class="col-sm-6" *ngIf="showCrossEnemy">
       <h4 class="special">Negations (or Absorptions)</h4>
       <div class="row">
          <div class="col-sm-6">
@@ -103,7 +114,7 @@
       </div>
       <p>The negation numbers are the % of your damage that gets blocked. For example, if a negation is 60, 40% of that damage by that type will go through and 60% will be negated. Bigger number = less damage. A negation of 100 means no damage goes through, and a negation of -100 mean the enemy takes 2x damage from that source. 0 means damage goes pretty much as is.</p>
    </div>
-   <div class="col-sm-6">
+   <div class="col-sm-6" *ngIf="showEnemySpecific">
       <h4 class="special">Resistances</h4>
       <div class="row">
          <div class="col-sm-6">
@@ -178,7 +189,7 @@
 </div>
 
 <div>
-  <details open *ngIf="highestNewGame > 0">
+  <details open *ngIf="showEnemySpecific && highestNewGame > 0">
     <summary class="expandable">
       NG+ and Beyond <small>(click to reveal)</small>
     </summary>

@@ -61,6 +61,10 @@ export class AppComponent {
     }),
   });
 
+  displayForm: FormGroup = this.fb.group({
+    display: ['full'],
+  });
+
   private readonly gapiClient: Promise<typeof gapi.client> =
       new Promise(async resolve => {
     (await this._waitForGapi()).load('client', () => {

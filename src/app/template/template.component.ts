@@ -13,6 +13,8 @@ export class TemplateComponent {
 
   @Input() stats!: CombatStats;
 
+  @Input() display!: 'full'|'cross-enemy'|'enemy-specific';
+
   @ViewChild('wrapper') private wrapper!: ElementRef<HTMLElement>;
 
   get hasNewGameResistances(): boolean {
@@ -41,6 +43,14 @@ export class TemplateComponent {
   get enemyName(): string {
     const name = this.stats.name;
     return typeof name === 'string' ? name : name.friendlyName;
+  }
+
+  get showCrossEnemy() {
+    return this.display !== 'enemy-specific';
+  }
+
+  get showEnemySpecific() {
+    return this.display !== 'cross-enemy';
   }
 
   isArray(value: unknown): boolean {
