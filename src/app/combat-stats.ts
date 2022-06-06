@@ -10,6 +10,7 @@ export interface CombatStats {
   stance: number;
   parriable: boolean;
   parriesPerCrit: number;
+  critable: boolean;
   absorptions: {
     physical: {
       standard: number,

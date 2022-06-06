@@ -39,6 +39,7 @@ export class AppComponent {
     stance: [0],
     parriable: [false],
     parriesPerCrit: [1],
+    critable: [true],
     absorptions: this.fb.group({
       physical: this.fb.group({
         standard: [0],

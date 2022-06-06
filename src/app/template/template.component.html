@@ -35,6 +35,22 @@
     </ng-container>
     <ng-template #other>No</ng-template>
   </li>
+  <li *ngIf="showCrossEnemy">
+    <ng-container *ngIf="stats.critable; else other">
+      Is vulnerable to a
+      <a href="https://eldenring.wiki.fextralife.com/Critical+Damage">critical hit</a>
+      after being
+      <a href="https://eldenring.wiki.fextralife.com/Stance">stance broken</a>
+      <ng-container *ngIf="stats.parriable"> or parried</ng-container>
+    </ng-container>
+    <ng-template #other>
+      Only staggers after being
+      <a href="https://eldenring.wiki.fextralife.com/Stance">stance broken</a>
+      <ng-container *ngIf="stats.parriable"> or parried</ng-container>
+      and is <strong>not</strong> vulnerable to a
+      <a href="https://eldenring.wiki.fextralife.com/Critical+Damage">critical hit</a>
+    </ng-template>
+  </li>
   <li *ngIf="showEnemySpecific && stats.runes[0]">
     Drops
     <img

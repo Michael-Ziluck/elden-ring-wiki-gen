@@ -17,14 +17,26 @@
       <label for="stance-input" class="form-label">Stance</label>
       <input type="number" class="form-control" id="Stance-input" formControlName="stance">
     </div>
-    <div class="input-group">
-      <div class="input-group-text">
-        <input class="form-check-input mt-0" type="checkbox" formControlName="parriable">
+    <div class="row mt-3">
+      <div class="col-md-6">
+        <div class="input-group">
+          <div class="input-group-text">
+            <input class="form-check-input mt-0" type="checkbox" formControlName="parriable">
+          </div>
+          <span class="input-group-text">Parries Per Crit</span>
+          <input
+            type="number" class="form-control" formControlName="parriesPerCrit"
+            [attr.disabled]="combatForm.value.parriable ? null : ''">
+        </div>
       </div>
-      <span class="input-group-text">Parries Per Crit</span>
-      <input
-        type="number" class="form-control" formControlName="parriesPerCrit"
-        [attr.disabled]="combatForm.value.parriable ? null : ''">
+      <div class="col-md-6">
+        <div class="input-group">
+          <div class="input-group-text">
+            <input class="form-check-input mt-0" type="checkbox" formControlName="critable">
+          </div>
+          <span class="input-group-text">Can Be Critical Hit</span>
+        </div>
+      </div>
     </div>
     <!--Absorptions-->
     <fieldset formGroupName="absorptions" class="row mt-3">
