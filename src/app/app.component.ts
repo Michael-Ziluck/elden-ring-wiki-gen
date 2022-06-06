@@ -37,6 +37,8 @@ export class AppComponent {
     defense: [[]],
     runes: [[]],
     stance: [0],
+    parriable: [false],
+    parriesPerCrit: [1],
     absorptions: this.fb.group({
       physical: this.fb.group({
         standard: [0],

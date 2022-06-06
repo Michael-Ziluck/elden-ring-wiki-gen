@@ -8,6 +8,8 @@ export interface CombatStats {
   defense: Array<number|null>;
   runes: Array<number|null>;
   stance: number;
+  parriable: boolean;
+  parriesPerCrit: number;
   absorptions: {
     physical: {
       standard: number,

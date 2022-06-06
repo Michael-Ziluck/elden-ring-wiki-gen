@@ -25,6 +25,16 @@
       <strong>{{stats.stance}}</strong>
     </span>
   </li>
+  <li *ngIf="showCrossEnemy">
+    <a href="https://eldenring.wiki.fextralife.com/Parrying">Parryable</a>:
+    <ng-container *ngIf="stats.parriable; else other">
+      Yes<ng-container *ngIf="stats.parriesPerCrit !== 1">,
+        but {{stats.parriesPerCrit}} parries are required per
+        <a href="https://eldenring.wiki.fextralife.com/Parrying">stance break</a>
+      </ng-container>
+    </ng-container>
+    <ng-template #other>No</ng-template>
+  </li>
   <li *ngIf="showEnemySpecific && stats.runes[0]">
     Drops
     <img
