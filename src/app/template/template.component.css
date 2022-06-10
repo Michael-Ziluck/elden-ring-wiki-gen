@@ -107,6 +107,13 @@ h4 {
   margin-bottom: 10px;
 }
 
+.special {
+  font-size: 18px;
+  border-bottom: 3px solid #ab966f;
+  display: flex;
+  justify-content: center;
+}
+
 table {
   border-spacing: 0;
   border-collapse: separate;
