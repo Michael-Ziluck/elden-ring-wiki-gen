@@ -14,9 +14,71 @@
       </mat-autocomplete>
     </div>
     <div class="col-md-12">
-      <label for="poise-input" class="form-label">Poise</label>
-      <input type="number" class="form-control" id="poise-input" formControlName="poise">
+      <label for="stance-input" class="form-label">Stance</label>
+      <input type="number" class="form-control" id="Stance-input" formControlName="stance">
     </div>
+    <div class="row mt-3">
+      <div class="col-md-6">
+        <div class="input-group">
+          <div class="input-group-text">
+            <input class="form-check-input mt-0" type="checkbox" formControlName="parriable">
+          </div>
+          <span class="input-group-text">Parries Per Crit</span>
+          <input
+            type="number" class="form-control" formControlName="parriesPerCrit"
+            [attr.disabled]="combatForm.value.parriable ? null : ''">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <div class="input-group-text">
+            <input
+              id="critable" class="form-check-input mt-0" type="checkbox"
+              formControlName="critable">
+          </div>
+          <label for="critable" class="input-group-text">Can Be Critical Hit</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Damage Types -->
+    <fieldset formGroupName="damageTypes" class="row mt-3">
+      <h4>Damage Inflicted</h4>
+      <ng-container *ngFor="let type of allDamageTypes">
+        <div class="col-md-3">
+          <div class="input-group">
+            <div class="input-group-text">
+              <input
+                id="{{type}}Damage" class="form-check-input mt-0" type="checkbox"
+                formControlName="{{type}}">
+            </div>
+            <label for="{{type}}Damage" class="input-group-text">
+              {{type | decamel | titlecase}}
+            </label>
+          </div>
+        </div>
+      </ng-container>
+    </fieldset>
+
+    <!-- Damage Types -->
+    <fieldset formGroupName="statusTypes" class="row mt-3">
+      <h4>Status Inflicted</h4>
+      <ng-container *ngFor="let type of allStatusTypes">
+        <div class="col-md-3">
+          <div class="input-group">
+            <div class="input-group-text">
+              <input
+                id="{{type}}Status" class="form-check-input mt-0" type="checkbox"
+                formControlName="{{type}}">
+            </div>
+            <label for="{{type}}Status" class="input-group-text">
+              {{type | decamel | titlecase}}
+            </label>
+          </div>
+        </div>
+      </ng-container>
+    </fieldset>
+
     <!--Absorptions-->
     <fieldset formGroupName="absorptions" class="row mt-3">
       <h4>Absorptions</h4>
@@ -42,7 +104,7 @@
       </div>
       <!--Magical-->
       <div class="col-md-6" formGroupName="magic">
-        <h4>Magical</h4>
+        <h5>Magical</h5>
         <div class="col-md-12">
           <label for="magic-magic-input" class="form-label">Magic</label>
           <input type="number" class="form-control" id="magic-magic-input" formControlName="magic">
@@ -93,6 +155,21 @@
     </table>
   </form>
 
+  <form [formGroup]="displayForm" class="row g-3 mt-1">
+    <div class="col-md-2 form-check">
+      <input class="form-check-input" type="radio" id="display-full" formControlName="display" value="full">
+      <label class="form-check-label" for="display-full">Full Information</label>
+    </div>
+    <div class="col-md-3 form-check">
+      <input class="form-check-input" type="radio" id="display-cross-enemy" formControlName="display" value="cross-enemy">
+      <label class="form-check-label" for="display-cross-enemy">Cross-Enemy Information</label>
+    </div>
+    <div class="col-md-3 form-check">
+      <input class="form-check-input" type="radio" id="display-enemy-specific" formControlName="display" value="enemy-specific">
+      <label class="form-check-label" for="display-enemy-specific">Enemy-Specific Information</label>
+    </div>
+  </form>
+
   <div class="copy row g-3 mt-1">
     <div class="col-2">
       <button type="submit" class="btn btn-primary" (click)="template.copyFormatted()">Copy Formatted</button>
@@ -103,5 +180,5 @@
     </div>
   </div>
 
-  <app-template [stats]="combatForm.value"></app-template>
+  <app-template [stats]="combatForm.value" [display]="displayForm.value.display"></app-template>
 </div>

@@ -36,7 +36,27 @@ export class AppComponent {
     health: [[0]],
     defense: [[]],
     runes: [[]],
-    poise: [0],
+    stance: [0],
+    parriable: [false],
+    parriesPerCrit: [1],
+    critable: [true],
+    damageTypes: this.fb.group({
+      standard: [false],
+      slash: [false],
+      strike: [false],
+      pierce: [false],
+      magic: [false],
+      fire: [false],
+      lightning: [false],
+      holy: [false],
+    }),
+    statusTypes: this.fb.group({
+      poison: [false],
+      scarletRot: [false],
+      hemorrhage: [false],
+      frostbite: [false],
+      deathBlight: [false],
+    }),
     absorptions: this.fb.group({
       physical: this.fb.group({
         standard: [0],
@@ -59,6 +79,10 @@ export class AppComponent {
       sleep: [[[100], [], [], [], [], [], [], []]],
       madness: [null],
     }),
+  });
+
+  displayForm: FormGroup = this.fb.group({
+    display: ['full'],
   });
 
   private readonly gapiClient: Promise<typeof gapi.client> =
@@ -120,6 +144,14 @@ export class AppComponent {
 
   @ViewChild(TemplateComponent) template!: TemplateComponent;
 
+  get allDamageTypes(): string[] {
+    return Object.keys(this.combatForm.value.damageTypes);
+  }
+
+  get allStatusTypes(): string[] {
+    return Object.keys(this.combatForm.value.statusTypes);
+  }
+
   constructor(
     private fb: FormBuilder,
     private highlight: HighlightService,
@@ -155,8 +187,11 @@ export class AppComponent {
 
   async enemyInfoSelected(event: MatAutocompleteSelectedEvent): Promise<void> {
     const info = event.option.value as EnemyInfo;
-    const responses = await Promise.all(
-        ['Stat_Data', 'Stat_Data_(NG+)', 'Stat_Data_(NG+2)'].map(async sheet =>
+    const responses = await Promise.all([
+      'Stat_Data',
+      'Stat_Data_(NG+)',
+      ...[...new Array(6).keys()].map(i => `Stat_Data_(NG+${i + 2})`)
+    ].map(async sheet =>
       await (await this.gapiClient).sheets.spreadsheets.values.get({
         spreadsheetId: '1aujq95UfL_oUs3voPt3nGqM1hLhaVJOj6JKB6Np3FD8',
         range: `${sheet}!A${info.rowIndex}:AX${info.rowIndex}`,
@@ -167,7 +202,7 @@ export class AppComponent {
     });
     if (newGames.some(newGame => !newGame)) return;
 
-    this.combatForm.controls['poise'].setValue(newGames[0]![17]);
+    this.combatForm.controls['stance'].setValue(newGames[0]![17]);
 
     const absorptions = this.combatForm.controls['absorptions'] as FormGroup;
     const physical = absorptions.controls['physical'] as FormGroup;
