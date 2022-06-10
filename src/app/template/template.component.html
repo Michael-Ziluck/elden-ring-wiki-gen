@@ -4,6 +4,48 @@
   Copied!
 </div>
 
+<ng-container *ngIf="display == 'enemy-specific'">
+  <hr style="clear: both">
+  <div class="infobox">
+    <div class="table-responsive">
+      <table class="wiki_table">
+        <tbody>
+          <tr>
+            <th colspan="2">
+              <h2>{{enemyName}}</h2>
+              <h4>__location__</h4>
+            </th>
+          </tr>
+          <tr>
+            <td style="text-align: center" attr.data-mce-style="text-align: center" colspan="2">
+              __image__
+            </td>
+          </tr>
+          <tr>
+            <td>Drops</td>
+            <td>
+              <img
+                title="Runes Icon"
+                alt="Runes Icon"
+                src="https://eldenring.wiki.fextralife.com/file/Elden-Ring/runes-currency-elden-ring-wiki-guide-18.png"
+                attr.data-mce-src="/file/Elden-Ring/runes-currency-elden-ring-wiki-guide-18.png"
+              ><!--
+              --><ng-container *ngIf="stats.runes[0]; else other"><!--
+                -->{{stats.runes[0] | number}}
+              </ng-container>
+              <ng-template #other>???</ng-template>
+            </td>
+          </tr>
+          <tr>
+            <td>HP</td>
+            <td>{{stats.health[0] | number}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</ng-container>
+
 <h3 class="bonfire">{{enemyName}} Combat information</h3>
 <ul>
   <li *ngIf="showEnemySpecific">

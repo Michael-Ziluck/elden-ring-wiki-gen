@@ -128,3 +128,37 @@ th, td {
 tr:nth-child(2n+1) {
   background-color: #222222;
 }
+
+.infobox {
+  width: 300px;
+  float: right;
+  color: #E7E7E7;
+}
+
+.infobox .wiki_table {
+  border: 10px solid transparent;
+  border-image-source: url(https://eldenring.wiki.fextralife.com/file/Elden-Ring/elden-ring-wiki-guide-infobox-border.png);
+  border-image-width: 20px 40px;
+  border-image-slice: 30 50 fill;
+  font-size: 14px;
+}
+
+.infobox th {
+  font-family: Spectral, fallback, Helvetica, Arial, sans-serif;
+  font-size: 1em;
+  text-align: center;
+  padding: 10px;
+  background: transparent url(https://www.wiki.fextralife.com/file/view/eso-wiki-table.jpg);
+}
+
+hr {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border: 0;
+  border-top: 1px solid #eee;
+  height: 0;
+  opacity: 1;
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+}
