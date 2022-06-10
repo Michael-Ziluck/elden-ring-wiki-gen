@@ -103,158 +103,21 @@
     >{{stats.runes[0] | number}}
   </li>
 </ul>
-<div class="row">
-   <div class="col-sm-6" *ngIf="showCrossEnemy">
-      <h4 class="special">Negations (or Absorptions)</h4>
-      <div class="row">
-         <div class="col-sm-6">
-            <ul>
-               <ng-container *ngTemplateOutlet="
-                  physicalNegation;
-                  context: {
-                    type: 'Standard',
-                    value: stats.absorptions.physical.standard
-                  }
-               "></ng-container>
-               <ng-container *ngTemplateOutlet="
-                  physicalNegation;
-                  context: {
-                    type: 'Slash',
-                    value: stats.absorptions.physical.slash
-                  }
-               "></ng-container>
-               <ng-container *ngTemplateOutlet="
-                  physicalNegation;
-                  context: {
-                    type: 'Strike',
-                    value: stats.absorptions.physical.strike
-                  }
-               "></ng-container>
-               <ng-container *ngTemplateOutlet="
-                  physicalNegation;
-                  context: {
-                    type: 'Pierce',
-                    value: stats.absorptions.physical.pierce
-                  }
-               "></ng-container>
-            </ul>
-         </div>
-         <div class="col-sm-6">
-            <ul>
-               <ng-container *ngTemplateOutlet="
-                  elementalNegation;
-                  context: {
-                    type: 'Magic',
-                    value: stats.absorptions.magic.magic,
-                    color: '#3fbddd',
-                    icon: '/file/Elden-Ring/magic-upgrades-elden-ring-wiki-guide-30.png'
-                  }
-               "></ng-container>
-               <ng-container *ngTemplateOutlet="
-                  elementalNegation;
-                  context: {
-                    type: 'Fire',
-                    value: stats.absorptions.magic.fire,
-                    color: '#cc9d57',
-                    icon: '/file/Elden-Ring/fire-upgrades-elden-ring-wiki-guide-30.png'
-                  }
-               "></ng-container>
-               <ng-container *ngTemplateOutlet="
-                  elementalNegation;
-                  context: {
-                    type: 'Lightning',
-                    value: stats.absorptions.magic.lightning,
-                    color: '#d5d559',
-                    icon: '/file/Elden-Ring/lightning-upgrades-elden-ring-wiki-guide-30.png'
-                  }
-               "></ng-container>
-               <ng-container *ngTemplateOutlet="
-                  elementalNegation;
-                  context: {
-                    type: 'Holy',
-                    value: stats.absorptions.magic.holy,
-                    color: '#ffcc99',
-                    icon: '/file/Elden-Ring/holy_upgrade_affinity_elden_ring_wiki_guide_60px.jpg'
-                  }
-               "></ng-container>
-            </ul>
-         </div>
-      </div>
-      <p>The negation numbers are the % of your damage that gets blocked. For example, if a negation is 60, 40% of that damage by that type will go through and 60% will be negated. Bigger number = less damage. A negation of 100 means no damage goes through, and a negation of -100 mean the enemy takes 2x damage from that source. 0 means damage goes pretty much as is.</p>
+
+<div class="row" *ngIf="display === 'full'">
+   <div class="col-sm-6">
+     <ng-container *ngTemplateOutlet="negations"></ng-container>
    </div>
    <div class="col-sm-6" *ngIf="showEnemySpecific">
-      <h4 class="special">Resistances</h4>
-      <div class="row">
-         <div class="col-sm-6">
-           <ul>
-             <ng-container *ngTemplateOutlet="
-                resistance;
-                context: {
-                  type: 'Poison',
-                  value: stats.resistances.poison,
-                  icon: '/file/Elden-Ring/poison_status_effect_elden_ring_wiki_guide_25px.png'
-                }
-             "></ng-container>
-             <ng-container *ngTemplateOutlet="
-                resistance;
-                context: {
-                  type: 'Scarlet Rot',
-                  value: stats.resistances.scarletRot,
-                  icon: '/file/Elden-Ring/scarlet_rot_status_effect_elden_ring_wiki_guide_25px.png'
-                }
-             "></ng-container>
-             <ng-container *ngTemplateOutlet="
-                resistance;
-                context: {
-                  type: 'Hemorrhage',
-                  value: stats.resistances.hemorrhage,
-                  icon: '/file/Elden-Ring/hemorrhage_status_effect_elden_ring_wiki_guide_25px.png'
-                }
-             "></ng-container>
-             <ng-container *ngTemplateOutlet="
-                resistance;
-                context: {
-                  type: 'Frostbite',
-                  value: stats.resistances.frostbite,
-                  icon: '/file/Elden-Ring/frostbite_status_effect_elden_ring_wiki_guide_25px.png'
-                }
-             "></ng-container>
-           </ul>
-         </div>
-         <div class="col-sm-6">
-           <ul>
-             <ng-container *ngTemplateOutlet="
-                resistance;
-                context: {
-                  type: 'Sleep',
-                  value: stats.resistances.sleep,
-                  icon: '/file/Elden-Ring/sleep_status_effect_elden_ring_wiki_guide_25px.png'
-                }
-             "></ng-container>
-             <ng-container *ngTemplateOutlet="
-                resistance;
-                context: {
-                  type: 'Madness',
-                  value: stats.resistances.madness,
-                  icon: '/file/Elden-Ring/madness_status_effect_elden_ring_wiki_guide_25px.png'
-                }
-             "></ng-container>
-           </ul>
-         </div>
-      </div>
-      <p>
-        The resistance numbers are the buildup amount to trigger it. For
-        example, if a resistance is 100 you must deal 100 points of the given
-        buildup to trigger it. Note that these go down over time, and increase
-        each time the effect procs.
-
-        <ng-container *ngIf="hasMultipleResistanceProcs">
-          The values after the "/"s indicate the increased resistances after
-          each successive proc.
-        </ng-container>
-      </p>
+     <ng-container *ngTemplateOutlet="resistances"></ng-container>
    </div>
 </div>
+<ng-container *ngIf="display === 'cross-enemy'">
+  <ng-container *ngTemplateOutlet="negations"></ng-container>
+</ng-container>
+<ng-container *ngIf="display === 'enemy-specific'">
+  <ng-container *ngTemplateOutlet="resistances"></ng-container>
+</ng-container>
 
 <div>
   <details open *ngIf="showEnemySpecific && highestNewGame > 0">
@@ -357,6 +220,158 @@
   </details>
 </div>
 </div>
+
+<ng-template #negations>
+  <h4 class="special">Negations (or Absorptions)</h4>
+  <div class="row">
+    <div class="col-sm-6">
+      <ul>
+        <ng-container *ngTemplateOutlet="
+          physicalNegation;
+          context: {
+            type: 'Standard',
+            value: stats.absorptions.physical.standard
+          }
+        "></ng-container>
+        <ng-container *ngTemplateOutlet="
+          physicalNegation;
+          context: {
+            type: 'Slash',
+            value: stats.absorptions.physical.slash
+          }
+        "></ng-container>
+        <ng-container *ngTemplateOutlet="
+          physicalNegation;
+          context: {
+            type: 'Strike',
+            value: stats.absorptions.physical.strike
+          }
+        "></ng-container>
+        <ng-container *ngTemplateOutlet="
+          physicalNegation;
+          context: {
+            type: 'Pierce',
+            value: stats.absorptions.physical.pierce
+          }
+        "></ng-container>
+      </ul>
+    </div>
+    <div class="col-sm-6">
+      <ul>
+        <ng-container *ngTemplateOutlet="
+          elementalNegation;
+          context: {
+            type: 'Magic',
+            value: stats.absorptions.magic.magic,
+            color: '#3fbddd',
+            icon: '/file/Elden-Ring/magic-upgrades-elden-ring-wiki-guide-30.png'
+          }
+        "></ng-container>
+        <ng-container *ngTemplateOutlet="
+          elementalNegation;
+          context: {
+            type: 'Fire',
+            value: stats.absorptions.magic.fire,
+            color: '#cc9d57',
+            icon: '/file/Elden-Ring/fire-upgrades-elden-ring-wiki-guide-30.png'
+          }
+        "></ng-container>
+        <ng-container *ngTemplateOutlet="
+          elementalNegation;
+          context: {
+            type: 'Lightning',
+            value: stats.absorptions.magic.lightning,
+            color: '#d5d559',
+            icon: '/file/Elden-Ring/lightning-upgrades-elden-ring-wiki-guide-30.png'
+          }
+        "></ng-container>
+        <ng-container *ngTemplateOutlet="
+          elementalNegation;
+          context: {
+            type: 'Holy',
+            value: stats.absorptions.magic.holy,
+            color: '#ffcc99',
+            icon: '/file/Elden-Ring/holy_upgrade_affinity_elden_ring_wiki_guide_60px.jpg'
+          }
+        "></ng-container>
+      </ul>
+    </div>
+  </div>
+  <p>The negation numbers are the % of your damage that gets blocked. For example, if a negation is 60, 40% of that damage by that type will go through and 60% will be negated. Bigger number = less damage. A negation of 100 means no damage goes through, and a negation of -100 mean the enemy takes 2x damage from that source. 0 means damage goes pretty much as is.</p>
+</ng-template>
+
+<ng-template #resistances>
+  <h4 class="special">Resistances</h4>
+  <div class="row">
+    <div class="col-sm-6">
+      <ul>
+        <ng-container *ngTemplateOutlet="
+          resistance;
+          context: {
+            type: 'Poison',
+            value: stats.resistances.poison,
+            icon: '/file/Elden-Ring/poison_status_effect_elden_ring_wiki_guide_25px.png'
+          }
+        "></ng-container>
+        <ng-container *ngTemplateOutlet="
+          resistance;
+          context: {
+            type: 'Scarlet Rot',
+            value: stats.resistances.scarletRot,
+            icon: '/file/Elden-Ring/scarlet_rot_status_effect_elden_ring_wiki_guide_25px.png'
+          }
+        "></ng-container>
+        <ng-container *ngTemplateOutlet="
+          resistance;
+          context: {
+            type: 'Hemorrhage',
+            value: stats.resistances.hemorrhage,
+            icon: '/file/Elden-Ring/hemorrhage_status_effect_elden_ring_wiki_guide_25px.png'
+          }
+        "></ng-container>
+        <ng-container *ngTemplateOutlet="
+          resistance;
+          context: {
+            type: 'Frostbite',
+            value: stats.resistances.frostbite,
+            icon: '/file/Elden-Ring/frostbite_status_effect_elden_ring_wiki_guide_25px.png'
+          }
+        "></ng-container>
+      </ul>
+    </div>
+    <div class="col-sm-6">
+      <ul>
+        <ng-container *ngTemplateOutlet="
+          resistance;
+          context: {
+            type: 'Sleep',
+            value: stats.resistances.sleep,
+            icon: '/file/Elden-Ring/sleep_status_effect_elden_ring_wiki_guide_25px.png'
+          }
+        "></ng-container>
+        <ng-container *ngTemplateOutlet="
+          resistance;
+          context: {
+            type: 'Madness',
+            value: stats.resistances.madness,
+            icon: '/file/Elden-Ring/madness_status_effect_elden_ring_wiki_guide_25px.png'
+          }
+        "></ng-container>
+      </ul>
+    </div>
+  </div>
+  <p>
+    The resistance numbers are the buildup amount to trigger it. For
+    example, if a resistance is 100 you must deal 100 points of the given
+    buildup to trigger it. Note that these go down over time, and increase
+    each time the effect procs.
+
+    <ng-container *ngIf="hasMultipleResistanceProcs">
+      The values after the "/"s indicate the increased resistances after
+      each successive proc.
+    </ng-container>
+  </p>
+</ng-template>
 
 <ng-template #physicalNegation let-type="type" let-value="value">
   <li>
