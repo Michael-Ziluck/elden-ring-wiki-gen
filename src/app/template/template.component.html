@@ -93,6 +93,20 @@
       <a href="https://eldenring.wiki.fextralife.com/Critical+Damage">critical hit</a>
     </ng-template>
   </li>
+  <li *ngIf="damageTypes.length > 0">
+    Damage:
+    <ng-container *ngFor="let type of damageTypes; let i = index"><!--
+      --><ng-container *ngIf="i !== 0">, </ng-container>
+      <ng-container *ngTemplateOutlet="iconLink; context: {type}"></ng-container><!--
+    --></ng-container>
+  </li>
+  <li *ngIf="statusTypes.length > 0">
+    Inflicts:
+    <ng-container *ngFor="let type of statusTypes; let i = index"><!--
+      --><ng-container *ngIf="i !== 0">, </ng-container>
+      <ng-container *ngTemplateOutlet="iconLink; context: {type}"></ng-container><!--
+    --></ng-container>
+  </li>
   <li *ngIf="showEnemySpecific && stats.runes[0]">
     Drops
     <img
@@ -147,72 +161,16 @@
           </ng-container>
           <ng-container *ngIf="hasNewGameValues(this.stats.runes)">
             <ng-container *ngTemplateOutlet="
-              newGameRow;
-              context: {
-                name: 'Runes',
-                data: stats.runes,
-                link: '/Runes',
-                icon: '/file/Elden-Ring/runes-currency-elden-ring-wiki-guide-18.png',
-                commas: true
-              }
+              newGameRow; context: {type: 'runes', data: stats.runes, commas: true}
             "></ng-container>
           </ng-container>
           <ng-container *ngIf="hasNewGameResistances">
             <tr><th colspan="9"><h4>Resistances</h4></th></tr>
-            <ng-container *ngTemplateOutlet="
-              newGameRow;
-              context: {
-                name: 'Poison',
-                data: stats.resistances.poison,
-                link: '/Poison',
-                icon: '/file/Elden-Ring/poison_status_effect_elden_ring_wiki_guide_25px.png'
-              }
-            "></ng-container>
-            <ng-container *ngTemplateOutlet="
-              newGameRow;
-              context: {
-                name: 'Scarlet Rot',
-                data: stats.resistances.scarletRot,
-                link: '/Scarlet+Rot',
-                icon: '/file/Elden-Ring/scarlet_rot_status_effect_elden_ring_wiki_guide_25px.png'
-              }
-            "></ng-container>
-            <ng-container *ngTemplateOutlet="
-              newGameRow;
-              context: {
-                name: 'Hemorrhage',
-                data: stats.resistances.hemorrhage,
-                link: '/Hemorrhage',
-                icon: '/file/Elden-Ring/hemorrhage_status_effect_elden_ring_wiki_guide_25px.png'
-              }
-            "></ng-container>
-            <ng-container *ngTemplateOutlet="
-              newGameRow;
-              context: {
-                name: 'Frostbite',
-                data: stats.resistances.frostbite,
-                link: '/Frostbite',
-                icon: '/file/Elden-Ring/frostbite_status_effect_elden_ring_wiki_guide_25px.png'
-              }
-            "></ng-container>
-            <ng-container *ngTemplateOutlet="
-              newGameRow;
-              context: {
-                name: 'Sleep',
-                data: stats.resistances.sleep,
-                link: '/Sleep',
-                icon: '/file/Elden-Ring/sleep_status_effect_elden_ring_wiki_guide_25px.png'
-              }
-            "></ng-container>
-            <ng-container *ngTemplateOutlet="
-              newGameRow;
-              context: {
-                name: 'Madness',
-                data: stats.resistances.madness,
-                link: '/Madness',
-                icon: '/file/Elden-Ring/madness_status_effect_elden_ring_wiki_guide_25px.png'
-              }
-            "></ng-container>
+            <ng-container *ngFor="let entry of stats.resistances | keyvalue">
+              <ng-container *ngTemplateOutlet="
+                newGameRow; context: {type: entry.key, data: entry.value}
+              "></ng-container>
+            </ng-container>
           </ng-container>
         </tbody>
       </table>
@@ -226,78 +184,20 @@
   <div class="row">
     <div class="col-sm-6">
       <ul>
-        <ng-container *ngTemplateOutlet="
-          negation;
-          context: {
-            type: 'Standard',
-            value: stats.absorptions.physical.standard,
-            icon: '/file/Elden-Ring/standard-damage-57px.png'
-          }
-        "></ng-container>
-        <ng-container *ngTemplateOutlet="
-          negation;
-          context: {
-            type: 'Slash',
-            value: stats.absorptions.physical.slash,
-            icon: '/file/Elden-Ring/slash-damage-57px-hookclaw.png'
-          }
-        "></ng-container>
-        <ng-container *ngTemplateOutlet="
-          negation;
-          context: {
-            type: 'Strike',
-            value: stats.absorptions.physical.strike,
-            icon: '/file/Elden-Ring/strike-damage-57px.png'
-          }
-        "></ng-container>
-        <ng-container *ngTemplateOutlet="
-          negation;
-          context: {
-            type: 'Pierce',
-            value: stats.absorptions.physical.pierce,
-            icon: '/file/Elden-Ring/pierce-damage-57px.png'
-          }
-        "></ng-container>
+        <ng-container *ngFor="let entry of stats.absorptions.physical | keyvalue">
+          <ng-container *ngTemplateOutlet="
+            negation; context: {type: entry.key, value: entry.value}
+          "></ng-container>
+        </ng-container>
       </ul>
     </div>
     <div class="col-sm-6">
       <ul>
-        <ng-container *ngTemplateOutlet="
-          negation;
-          context: {
-            type: 'Magic',
-            value: stats.absorptions.magic.magic,
-            color: '#3fbddd',
-            icon: '/file/Elden-Ring/magic-upgrades-elden-ring-wiki-guide-30.png'
-          }
-        "></ng-container>
-        <ng-container *ngTemplateOutlet="
-          negation;
-          context: {
-            type: 'Fire',
-            value: stats.absorptions.magic.fire,
-            color: '#cc9d57',
-            icon: '/file/Elden-Ring/fire-upgrades-elden-ring-wiki-guide-30.png'
-          }
-        "></ng-container>
-        <ng-container *ngTemplateOutlet="
-          negation;
-          context: {
-            type: 'Lightning',
-            value: stats.absorptions.magic.lightning,
-            color: '#d5d559',
-            icon: '/file/Elden-Ring/lightning-upgrades-elden-ring-wiki-guide-30.png'
-          }
-        "></ng-container>
-        <ng-container *ngTemplateOutlet="
-          negation;
-          context: {
-            type: 'Holy',
-            value: stats.absorptions.magic.holy,
-            color: '#ffcc99',
-            icon: '/file/Elden-Ring/holy_upgrade_affinity_elden_ring_wiki_guide_60px.jpg'
-          }
-        "></ng-container>
+        <ng-container *ngFor="let entry of stats.absorptions.magic | keyvalue">
+          <ng-container *ngTemplateOutlet="
+            negation; context: {type: entry.key, value: entry.value}
+          "></ng-container>
+        </ng-container>
       </ul>
     </div>
   </div>
@@ -309,58 +209,20 @@
   <div class="row">
     <div class="col-sm-6">
       <ul>
-        <ng-container *ngTemplateOutlet="
-          resistance;
-          context: {
-            type: 'Poison',
-            value: stats.resistances.poison,
-            icon: '/file/Elden-Ring/poison_status_effect_elden_ring_wiki_guide_25px.png'
-          }
-        "></ng-container>
-        <ng-container *ngTemplateOutlet="
-          resistance;
-          context: {
-            type: 'Scarlet Rot',
-            value: stats.resistances.scarletRot,
-            icon: '/file/Elden-Ring/scarlet_rot_status_effect_elden_ring_wiki_guide_25px.png'
-          }
-        "></ng-container>
-        <ng-container *ngTemplateOutlet="
-          resistance;
-          context: {
-            type: 'Hemorrhage',
-            value: stats.resistances.hemorrhage,
-            icon: '/file/Elden-Ring/hemorrhage_status_effect_elden_ring_wiki_guide_25px.png'
-          }
-        "></ng-container>
-        <ng-container *ngTemplateOutlet="
-          resistance;
-          context: {
-            type: 'Frostbite',
-            value: stats.resistances.frostbite,
-            icon: '/file/Elden-Ring/frostbite_status_effect_elden_ring_wiki_guide_25px.png'
-          }
-        "></ng-container>
+        <ng-container *ngFor="let entry of stats.resistances | keyvalue | slice:0:4">
+          <ng-container *ngTemplateOutlet="
+            resistance; context: {type: entry.key, value: entry.value}
+          "></ng-container>
+        </ng-container>
       </ul>
     </div>
     <div class="col-sm-6">
       <ul>
-        <ng-container *ngTemplateOutlet="
-          resistance;
-          context: {
-            type: 'Sleep',
-            value: stats.resistances.sleep,
-            icon: '/file/Elden-Ring/sleep_status_effect_elden_ring_wiki_guide_25px.png'
-          }
-        "></ng-container>
-        <ng-container *ngTemplateOutlet="
-          resistance;
-          context: {
-            type: 'Madness',
-            value: stats.resistances.madness,
-            icon: '/file/Elden-Ring/madness_status_effect_elden_ring_wiki_guide_25px.png'
-          }
-        "></ng-container>
+        <ng-container *ngFor="let entry of stats.resistances | keyvalue | slice:4:6">
+          <ng-container *ngTemplateOutlet="
+            resistance; context: {type: entry.key, value: entry.value}
+          "></ng-container>
+        </ng-container>
       </ul>
     </div>
   </div>
@@ -377,29 +239,16 @@
   </p>
 </ng-template>
 
-<ng-template #negation
-    let-type="type" let-value="value" let-color="color" let-icon="icon">
+<ng-template #negation let-type="type" let-value="value">
   <li>
-    <a class="wiki_link" title="Elden Ring {{type}} Damage"
-        style="color: {{color}};" attr.data-mce-style="color: {{color}};"
-        href="https://eldenring.wiki.fextralife.com/{{type}}+Damage"
-        attr.data-mce-href="/{{type}}+Damage">
-      <img title="{{type}} Icon" alt="{{type}} Icon" width="20" height="20"
-          src="https://eldenring.wiki.fextralife.com{{icon}}"
-          attr.data-mce-src="{{icon}}"
-      >{{type}}</a>:
+    <ng-container *ngTemplateOutlet="iconLink; context: {type}"></ng-container>:
     <strong>{{value}}</strong>
   </li>
 </ng-template>
 
-<ng-template #resistance let-type="type" let-value="value" let-immune="immune" let-icon="icon">
+<ng-template #resistance let-type="type" let-value="value" let-immune="immune">
   <li>
-    <a class="wiki_link" title="{{type}}" attr.data-mce-href="/{{type}}"
-        href="https://eldenring.wiki.fextralife.com/{{type}}">
-      <img title="{{type}} Icon" alt="{{type}} Icon" width="20"
-          src="https://eldenring.wiki.fextralife.com{{icon}}"
-          attr.data-mce-src="{{icon}}"
-      >{{type}}</a>:
+    <ng-container *ngTemplateOutlet="iconLink; context: {type}"></ng-container>:
     <ng-container *ngIf="value !== null; else other">
       <ng-container *ngTemplateOutlet="
         resistanceNumbers;
@@ -411,22 +260,13 @@
   </li>
 </ng-template>
 
-<ng-template #newGameRow
-    let-name="name" let-data="data" let-link="link" let-icon="icon" let-commas="commas">
+<ng-template #newGameRow let-name="name" let-data="data" let-type="type" let-commas="commas">
   <tr>
     <th scope="row">
-      <ng-container *ngIf="link; else nameTemplate">
-        <a href="https://eldenring.wiki.fextralife.com{{link}}"
-            attr.data-mce-href="{{link}}">
-          <ng-container *ngTemplateOutlet="nameTemplate"></ng-container>
-        </a>
+      <ng-container *ngIf="type; else nameTemplate">
+        <ng-container *ngTemplateOutlet="iconLink; context: {type}"></ng-container>
       </ng-container>
-      <ng-template #nameTemplate>
-        <img title="{{name}} Icon" alt="{{name}} Icon" width="20" *ngIf="icon"
-            src="https://eldenring.wiki.fextralife.com{{icon}}"
-            attr.data-mce-src="{{icon}}"
-        >{{name}}
-      </ng-template>
+      <ng-template #nameTemplate>{{name}}</ng-template>
     </th>
 
     <ng-container *ngIf="data !== null; else other">
@@ -470,3 +310,18 @@
 </ng-template>
 
 <ng-template #immune><strong>Immune</strong></ng-template>
+
+<ng-template #iconLink let-type="type">
+  <a class="wiki_link"
+      title="{{getIconLink(type).text}}" attr.data-mce-href="{{getIconLink(type).href}}"
+      href="https://eldenring.wiki.fextralife.com/{{getIconLink(type).href}}"
+      [style]="getIconLink(type).color ? 'color: ' + getIconLink(type).color : null"
+      [attr.data-mce-style]="
+        getIconLink(type).color ? 'color: ' + getIconLink(type).color : null
+      ">
+    <img title="{{getIconLink(type).text}} Icon" alt="{{getIconLink(type).text}} Icon" width="20"
+        src="https://eldenring.wiki.fextralife.com{{getIconLink(type).icon}}"
+        attr.data-mce-src="{{getIconLink(type).icon}}"
+    >{{getIconLink(type).text}}<!--
+  --></a><!--
+--></ng-template>

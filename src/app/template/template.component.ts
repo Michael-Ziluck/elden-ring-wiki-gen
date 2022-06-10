@@ -1,6 +1,7 @@
 import { Component, Input, ElementRef, ViewChild } from '@angular/core';
 import { CombatStats } from '../combat-stats';
 import { findLastIndex } from '../utils';
+import { IconLink, iconLinks } from './icon-links';
 
 @Component({
   selector: 'app-template[stats]',
@@ -53,6 +54,18 @@ export class TemplateComponent {
     return this.display !== 'cross-enemy';
   }
 
+  get damageTypes(): string[] {
+    return Object.entries(this.stats.damageTypes)
+      .filter(([type, isDealt]) => isDealt)
+      .map(([type]) => type);
+  }
+
+  get statusTypes(): string[] {
+    return Object.entries(this.stats.statusTypes)
+      .filter(([type, isDealt]) => isDealt)
+      .map(([type]) => type);
+  }
+
   isArray(value: unknown): boolean {
     return value instanceof Array;
   }
@@ -60,6 +73,10 @@ export class TemplateComponent {
   hasNewGameValues(array?: unknown[]): boolean {
     if (!array) return false;
     return findLastIndex(array, value => !!value) > 0;
+  }
+
+  getIconLink(name: keyof typeof iconLinks): IconLink {
+    return iconLinks[name];
   }
 
   async copyFormatted(): Promise<void> {

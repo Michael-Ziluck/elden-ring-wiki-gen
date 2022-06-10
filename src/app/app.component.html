@@ -32,12 +32,53 @@
       <div class="col-md-6">
         <div class="input-group">
           <div class="input-group-text">
-            <input class="form-check-input mt-0" type="checkbox" formControlName="critable">
+            <input
+              id="critable" class="form-check-input mt-0" type="checkbox"
+              formControlName="critable">
           </div>
-          <span class="input-group-text">Can Be Critical Hit</span>
+          <label for="critable" class="input-group-text">Can Be Critical Hit</label>
         </div>
       </div>
     </div>
+
+    <!-- Damage Types -->
+    <fieldset formGroupName="damageTypes" class="row mt-3">
+      <h4>Damage Inflicted</h4>
+      <ng-container *ngFor="let type of allDamageTypes">
+        <div class="col-md-3">
+          <div class="input-group">
+            <div class="input-group-text">
+              <input
+                id="{{type}}Damage" class="form-check-input mt-0" type="checkbox"
+                formControlName="{{type}}">
+            </div>
+            <label for="{{type}}Damage" class="input-group-text">
+              {{type | decamel | titlecase}}
+            </label>
+          </div>
+        </div>
+      </ng-container>
+    </fieldset>
+
+    <!-- Damage Types -->
+    <fieldset formGroupName="statusTypes" class="row mt-3">
+      <h4>Status Inflicted</h4>
+      <ng-container *ngFor="let type of allStatusTypes">
+        <div class="col-md-3">
+          <div class="input-group">
+            <div class="input-group-text">
+              <input
+                id="{{type}}Status" class="form-check-input mt-0" type="checkbox"
+                formControlName="{{type}}">
+            </div>
+            <label for="{{type}}Status" class="input-group-text">
+              {{type | decamel | titlecase}}
+            </label>
+          </div>
+        </div>
+      </ng-container>
+    </fieldset>
+
     <!--Absorptions-->
     <fieldset formGroupName="absorptions" class="row mt-3">
       <h4>Absorptions</h4>

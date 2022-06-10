@@ -40,6 +40,23 @@ export class AppComponent {
     parriable: [false],
     parriesPerCrit: [1],
     critable: [true],
+    damageTypes: this.fb.group({
+      standard: [false],
+      slash: [false],
+      strike: [false],
+      pierce: [false],
+      magic: [false],
+      fire: [false],
+      lightning: [false],
+      holy: [false],
+    }),
+    statusTypes: this.fb.group({
+      poison: [false],
+      scarletRot: [false],
+      hemorrhage: [false],
+      frostbite: [false],
+      deathBlight: [false],
+    }),
     absorptions: this.fb.group({
       physical: this.fb.group({
         standard: [0],
@@ -126,6 +143,14 @@ export class AppComponent {
   @ViewChild(MatAutocomplete) autocomplete!: MatAutocomplete;
 
   @ViewChild(TemplateComponent) template!: TemplateComponent;
+
+  get allDamageTypes(): string[] {
+    return Object.keys(this.combatForm.value.damageTypes);
+  }
+
+  get allStatusTypes(): string[] {
+    return Object.keys(this.combatForm.value.statusTypes);
+  }
 
   constructor(
     private fb: FormBuilder,
