@@ -227,31 +227,35 @@
     <div class="col-sm-6">
       <ul>
         <ng-container *ngTemplateOutlet="
-          physicalNegation;
+          negation;
           context: {
             type: 'Standard',
-            value: stats.absorptions.physical.standard
+            value: stats.absorptions.physical.standard,
+            icon: '/file/Elden-Ring/standard-damage-57px.png'
           }
         "></ng-container>
         <ng-container *ngTemplateOutlet="
-          physicalNegation;
+          negation;
           context: {
             type: 'Slash',
-            value: stats.absorptions.physical.slash
+            value: stats.absorptions.physical.slash,
+            icon: '/file/Elden-Ring/slash-damage-57px-hookclaw.png'
           }
         "></ng-container>
         <ng-container *ngTemplateOutlet="
-          physicalNegation;
+          negation;
           context: {
             type: 'Strike',
-            value: stats.absorptions.physical.strike
+            value: stats.absorptions.physical.strike,
+            icon: '/file/Elden-Ring/strike-damage-57px.png'
           }
         "></ng-container>
         <ng-container *ngTemplateOutlet="
-          physicalNegation;
+          negation;
           context: {
             type: 'Pierce',
-            value: stats.absorptions.physical.pierce
+            value: stats.absorptions.physical.pierce,
+            icon: '/file/Elden-Ring/pierce-damage-57px.png'
           }
         "></ng-container>
       </ul>
@@ -259,7 +263,7 @@
     <div class="col-sm-6">
       <ul>
         <ng-container *ngTemplateOutlet="
-          elementalNegation;
+          negation;
           context: {
             type: 'Magic',
             value: stats.absorptions.magic.magic,
@@ -268,7 +272,7 @@
           }
         "></ng-container>
         <ng-container *ngTemplateOutlet="
-          elementalNegation;
+          negation;
           context: {
             type: 'Fire',
             value: stats.absorptions.magic.fire,
@@ -277,7 +281,7 @@
           }
         "></ng-container>
         <ng-container *ngTemplateOutlet="
-          elementalNegation;
+          negation;
           context: {
             type: 'Lightning',
             value: stats.absorptions.magic.lightning,
@@ -286,7 +290,7 @@
           }
         "></ng-container>
         <ng-container *ngTemplateOutlet="
-          elementalNegation;
+          negation;
           context: {
             type: 'Holy',
             value: stats.absorptions.magic.holy,
@@ -373,17 +377,7 @@
   </p>
 </ng-template>
 
-<ng-template #physicalNegation let-type="type" let-value="value">
-  <li>
-    <a class="wiki_link" title="Elden Ring {{type}} Damage"
-        href="https://eldenring.wiki.fextralife.com/{{type}}+Damage"
-        attr.data-mce-href="/{{type}}+Damage">
-      Phy ({{type}})</a>:
-    <strong>{{value}}</strong>
-  </li>
-</ng-template>
-
-<ng-template #elementalNegation
+<ng-template #negation
     let-type="type" let-value="value" let-color="color" let-icon="icon">
   <li>
     <a class="wiki_link" title="Elden Ring {{type}} Damage"
