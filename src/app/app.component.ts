@@ -35,6 +35,7 @@ export class AppComponent {
 
   combatForm: FormGroup = this.fb.group({
     name: [''],
+    location: [''],
     health: [[0]],
     defense: [[]],
     runes: [[]],
@@ -202,6 +203,11 @@ export class AppComponent {
       return result ? result[0] : null;
     });
     if (newGames.some(newGame => !newGame)) return;
+
+    if (info.name.includes(' - ')) {
+      this.combatForm.controls['location'].setValue(
+          info.name.split(' - ')[1].replace(/.* \((.*)\)$/, '$1'));
+    }
 
     this.combatForm.controls['stance'].setValue(newGames[0]![17]);
 

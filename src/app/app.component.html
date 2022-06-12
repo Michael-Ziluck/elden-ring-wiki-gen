@@ -2,7 +2,7 @@
   <h3>Combat Info Generator</h3>
 
   <form [formGroup]="combatForm" class="row g-3">
-    <div class="col-md-12">
+    <div class="col-md-4">
       <label for="name-input" class="form-label">Name</label>
       <input type="text" class="form-control" id="name-input"
         formControlName="name" [matAutocomplete]="auto">
@@ -13,9 +13,13 @@
         </mat-option>
       </mat-autocomplete>
     </div>
-    <div class="col-md-12">
+    <div class="col-md-4">
+      <label for="location-input" class="form-label">Location</label>
+      <input type="text" class="form-control" id="location-input" formControlName="location">
+    </div>
+    <div class="col-md-4">
       <label for="stance-input" class="form-label">Stance</label>
-      <input type="number" class="form-control" id="Stance-input" formControlName="stance">
+      <input type="number" class="form-control" id="stance-input" formControlName="stance">
     </div>
     <div class="row mt-3">
       <div class="col-md-3">

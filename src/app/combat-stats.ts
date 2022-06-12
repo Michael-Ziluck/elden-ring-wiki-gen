@@ -6,6 +6,7 @@ export type Resistance = Array<Array<number|null>>|null;
 
 export interface CombatStats {
   name: string|EnemyInfo;
+  location: string;
   health: Array<number|null>;
   defense: Array<number|null>;
   runes: Array<number|null>;

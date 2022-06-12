@@ -13,7 +13,14 @@
           <tr>
             <th colspan="2">
               <h2>{{enemyName}}</h2>
-              <h4>__location__</h4>
+              <h4>
+                <a
+                    href="https://eldenring.wiki.fextralife.com/{{stats.location | spaceToPlus}}"
+                    *ngIf="stats.location !== ''; else other">
+                  {{stats.location}}
+                </a>
+                <ng-template #other>__location__</ng-template>
+              </h4>
             </th>
           </tr>
           <tr>
@@ -49,12 +56,17 @@
 <ng-container *ngIf="showEnemySpecific">
   <h3 class="bonfire">
     Elden Ring {{enemyName}} Boss
-    <ng-container *ngIf="display === 'enemy-specific'">(__location__)</ng-container>
+    <ng-container *ngIf="display === 'enemy-specific'">
+      ({{stats.location === '' ? '__location__' : stats.location}})
+    </ng-container>
   </h3>
 
   <ul>
     <li>This is <strong *ngIf="!stats.optional">not</strong> an optional boss</li>
-    <li>Closest Site of Grace: <strong>__grace__</strong></li>
+    <li>
+      Closest Site of Grace:
+      <strong>{{stats.location === '' ? '__grace__' : stats.location}}</strong>
+    </li>
     <li>
       Multiplayer is <strong *ngIf="!stats.multiplayerAllowed">not</strong> allowed for this boss
     </li>
