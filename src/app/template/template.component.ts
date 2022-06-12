@@ -2,6 +2,8 @@ import { Component, Input, ElementRef, ViewChild } from '@angular/core';
 import { CombatStats } from '../combat-stats';
 import { findLastIndex } from '../utils';
 import { IconLink, iconLinks } from './icon-links';
+import { damageTypes } from '../damage';
+import { inflictedStatusTypes } from '../status';
 
 @Component({
   selector: 'app-template[stats]',
@@ -54,16 +56,13 @@ export class TemplateComponent {
     return this.display !== 'cross-enemy';
   }
 
-  get damageTypes(): string[] {
-    return Object.entries(this.stats.damageTypes)
-      .filter(([type, isDealt]) => isDealt)
-      .map(([type]) => type);
+  get inflictedDamageTypes(): string[] {
+    return damageTypes.filter(type => this.stats.inflictedDamageTypes[type]);
   }
 
-  get statusTypes(): string[] {
-    return Object.entries(this.stats.statusTypes)
-      .filter(([type, isDealt]) => isDealt)
-      .map(([type]) => type);
+  get inflictedStatusTypes(): string[] {
+    return inflictedStatusTypes
+        .filter(type => this.stats.inflictedStatusTypes[type]);
   }
 
   isArray(value: unknown): boolean {

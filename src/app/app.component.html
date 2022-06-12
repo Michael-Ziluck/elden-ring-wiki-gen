@@ -42,9 +42,9 @@
     </div>
 
     <!-- Damage Types -->
-    <fieldset formGroupName="damageTypes" class="row mt-3">
+    <fieldset formGroupName="inflictedDamageTypes" class="row mt-3">
       <h4>Damage Inflicted</h4>
-      <ng-container *ngFor="let type of allDamageTypes">
+      <ng-container *ngFor="let type of damageTypes">
         <div class="col-md-3">
           <div class="input-group">
             <div class="input-group-text">
@@ -61,9 +61,9 @@
     </fieldset>
 
     <!-- Damage Types -->
-    <fieldset formGroupName="statusTypes" class="row mt-3">
+    <fieldset formGroupName="inflictedStatusTypes" class="row mt-3">
       <h4>Status Inflicted</h4>
-      <ng-container *ngFor="let type of allStatusTypes">
+      <ng-container *ngFor="let type of inflictedStatusTypes">
         <div class="col-md-3">
           <div class="input-group">
             <div class="input-group-text">
@@ -82,45 +82,29 @@
     <!--Absorptions-->
     <fieldset formGroupName="absorptions" class="row mt-3">
       <h4>Absorptions</h4>
-      <!--Physical-->
-      <div class="col-md-6" formGroupName="physical">
-        <h5>Physical</h5>
-        <div class="col-md-12">
-          <label for="physical-standard-input" class="form-label">Phy (Standard)</label>
-          <input type="number" class="form-control" id="physical-standard-input" formControlName="standard">
-        </div>
-        <div class="col-md-12">
-          <label for="physical-slash-input" class="form-label">Phy (Slash)</label>
-          <input type="number" class="form-control" id="physical-slash-input" formControlName="slash">
-        </div>
-        <div class="col-md-12">
-          <label for="physical-strike-input" class="form-label">Phy (Strike)</label>
-          <input type="number" class="form-control" id="physical-strike-input" formControlName="strike">
-        </div>
-        <div class="col-md-12">
-          <label for="physical-pierce-input" class="form-label">Phy (Pierce)</label>
-          <input type="number" class="form-control" id="physical-pierce-input" formControlName="pierce">
-        </div>
+      <div class="col-md-6">
+        <ng-container *ngFor="let type of damageTypes | slice:0:4">
+          <div class="col-md-12">
+            <label for="{{type}}-inflicted-input" class="form-label">
+              {{type | titlecase}}
+            </label>
+            <input
+              type="number" class="form-control" id="{{type}}-input"
+              formControlName="standard">
+          </div>
+        </ng-container>
       </div>
-      <!--Magical-->
-      <div class="col-md-6" formGroupName="magic">
-        <h5>Magical</h5>
-        <div class="col-md-12">
-          <label for="magic-magic-input" class="form-label">Magic</label>
-          <input type="number" class="form-control" id="magic-magic-input" formControlName="magic">
-        </div>
-        <div class="col-md-12">
-          <label for="magic-fire-input" class="form-label">Fire</label>
-          <input type="number" class="form-control" id="magic-fire-input" formControlName="fire">
-        </div>
-        <div class="col-md-12">
-          <label for="magic-lightning-input" class="form-label">Lightning</label>
-          <input type="number" class="form-control" id="magic-lightning-input" formControlName="lightning">
-        </div>
-        <div class="col-md-12">
-          <label for="magic-holy-input" class="form-label">Holy</label>
-          <input type="number" class="form-control" id="magic-holy-input" formControlName="holy">
-        </div>
+      <div class="col-md-6">
+        <ng-container *ngFor="let type of damageTypes | slice:4:8">
+          <div class="col-md-12">
+            <label for="{{type}}-inflicted-input" class="form-label">
+              {{type | titlecase}}
+            </label>
+            <input
+              type="number" class="form-control" id="{{type}}-input"
+              formControlName="standard">
+          </div>
+        </ng-container>
       </div>
     </fieldset>
     <!--Resistances-->
@@ -144,12 +128,12 @@
         <tr formControlName="runes" new-game-row-input name="Runes"></tr>
         <tr><th colspan="8">Resistances</th></tr>
         <ng-container formGroupName="resistances">
-          <tr resistance-input formControlName="poison" name="Poison"></tr>
-          <tr resistance-input formControlName="scarletRot" name="Scarlet Rot"></tr>
-          <tr resistance-input formControlName="hemorrhage" name="Hemorrhage"></tr>
-          <tr resistance-input formControlName="frostbite" name="Frostbite"></tr>
-          <tr resistance-input formControlName="sleep" name="Sleep"></tr>
-          <tr resistance-input formControlName="madness" name="Madness"></tr>
+          <ng-container *ngFor="let type of resistedStatusTypes">
+            <tr
+              resistance-input formControlName="{{type}}"
+              name="{{type | decamel | titlecase}}">
+            </tr>
+          </ng-container>
         </ng-container>
       </tbody>
     </table>
