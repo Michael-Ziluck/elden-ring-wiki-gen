@@ -4,7 +4,7 @@
   Copied!
 </div>
 
-<ng-container *ngIf="display == 'enemy-specific'">
+<ng-container *ngIf="display === 'enemy-specific'">
   <hr style="clear: both">
   <div class="infobox">
     <div class="table-responsive">
@@ -44,6 +44,31 @@
       </table>
     </div>
   </div>
+</ng-container>
+
+<ng-container *ngIf="showEnemySpecific">
+  <h3 class="bonfire">
+    Elden Ring {{enemyName}} Boss
+    <ng-container *ngIf="display === 'enemy-specific'">(__location__)</ng-container>
+  </h3>
+
+  <ul>
+    <li>This is <strong *ngIf="!stats.optional">not</strong> an optional boss</li>
+    <li>Closest Site of Grace: <strong>__grace__</strong></li>
+    <li>
+      Multiplayer is <strong *ngIf="!stats.multiplayerAllowed">not</strong> allowed for this boss
+    </li>
+    <li>
+      You
+      <ng-container *ngIf="stats.summonsAllowed; else other">can</ng-container>
+      <ng-template #other><strong>cannot</strong></ng-template>
+      summon
+      <a class="wiki_link" href="https://eldenring.wiki.fextralife.com/Spirit+Ashes">
+        Spirit Ashes
+      </a>
+      for this boss
+    </li>
+  </ul>
 </ng-container>
 
 <h3 class="bonfire">{{enemyName}} Combat information</h3>

@@ -42,6 +42,9 @@ export class AppComponent {
     parriable: [false],
     parriesPerCrit: [1],
     critable: [true],
+    optional: [true],
+    multiplayerAllowed: [true],
+    summonsAllowed: [true],
     inflictedDamageTypes: this.fb.group({
       standard: [false],
       slash: [false],

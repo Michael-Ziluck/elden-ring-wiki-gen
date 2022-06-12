@@ -13,6 +13,9 @@ export interface CombatStats {
   parriable: boolean;
   parriesPerCrit: number;
   critable: boolean;
+  optional: boolean;
+  multiplayerAllowed: boolean;
+  summonsAllowed: boolean;
   inflictedDamageTypes: {[key in DamageType]: boolean},
   inflictedStatusTypes: {[key in InflictedStatusType]: boolean},
   absorptions: {[key in DamageType]: number},
