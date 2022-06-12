@@ -79,6 +79,11 @@ export class TemplateComponent {
     return iconLinks[name];
   }
 
+  // Work around angular/angular#42490.
+  originalOrder(a: unknown, b: unknown): number {
+    return 0;
+  }
+
   async copyFormatted(): Promise<void> {
     const html = this.htmlToCopy();
     await navigator.clipboard.write([

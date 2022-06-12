@@ -166,7 +166,7 @@
           </ng-container>
           <ng-container *ngIf="hasNewGameResistances">
             <tr><th colspan="9"><h4>Resistances</h4></th></tr>
-            <ng-container *ngFor="let entry of stats.resistances | keyvalue">
+            <ng-container *ngFor="let entry of stats.resistances | keyvalue:originalOrder">
               <ng-container *ngTemplateOutlet="
                 newGameRow; context: {type: entry.key, data: entry.value}
               "></ng-container>
@@ -184,7 +184,7 @@
   <div class="row">
     <div class="col-sm-6">
       <ul>
-        <ng-container *ngFor="let entry of stats.absorptions.physical | keyvalue">
+        <ng-container *ngFor="let entry of stats.absorptions.physical | keyvalue:originalOrder">
           <ng-container *ngTemplateOutlet="
             negation; context: {type: entry.key, value: entry.value}
           "></ng-container>
@@ -193,7 +193,7 @@
     </div>
     <div class="col-sm-6">
       <ul>
-        <ng-container *ngFor="let entry of stats.absorptions.magic | keyvalue">
+        <ng-container *ngFor="let entry of stats.absorptions.magic | keyvalue:originalOrder">
           <ng-container *ngTemplateOutlet="
             negation; context: {type: entry.key, value: entry.value}
           "></ng-container>
@@ -209,7 +209,7 @@
   <div class="row">
     <div class="col-sm-6">
       <ul>
-        <ng-container *ngFor="let entry of stats.resistances | keyvalue | slice:0:4">
+        <ng-container *ngFor="let entry of stats.resistances | keyvalue:originalOrder | slice:0:4">
           <ng-container *ngTemplateOutlet="
             resistance; context: {type: entry.key, value: entry.value}
           "></ng-container>
@@ -218,7 +218,7 @@
     </div>
     <div class="col-sm-6">
       <ul>
-        <ng-container *ngFor="let entry of stats.resistances | keyvalue | slice:4:6">
+        <ng-container *ngFor="let entry of stats.resistances | keyvalue:originalOrder | slice:4:6">
           <ng-container *ngTemplateOutlet="
             resistance; context: {type: entry.key, value: entry.value}
           "></ng-container>
