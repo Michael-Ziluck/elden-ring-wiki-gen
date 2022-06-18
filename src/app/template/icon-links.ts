@@ -77,9 +77,9 @@ export const iconLinks = {
   },
 
   hemorrhage: {
-    text: 'Hemmorhage',
+    text: 'Hemorrhage',
     icon: '/file/Elden-Ring/hemorrhage_status_effect_elden_ring_wiki_guide_25px.png',
-    href: '/Hemmorhage',
+    href: '/Hemorrhage',
   },
 
   frostbite: {
