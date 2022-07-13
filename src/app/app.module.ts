@@ -10,6 +10,7 @@ import { TemplateComponent } from './template/template.component';
 import { ResistanceInputComponent } from './resistance-input/resistance-input.component';
 import { NewGameRowInputComponent } from './new-game-row-input/new-game-row-input.component';
 import { DecamelPipe } from './decamel.pipe';
+import { SpaceToPlusPipe } from './space-to-plus.pipe';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { DecamelPipe } from './decamel.pipe';
     TemplateComponent,
     ResistanceInputComponent,
     NewGameRowInputComponent,
-    DecamelPipe
+    DecamelPipe,
+    SpaceToPlusPipe
   ],
   imports: [
     BrowserModule,

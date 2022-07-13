@@ -4,7 +4,7 @@
   Copied!
 </div>
 
-<ng-container *ngIf="display == 'enemy-specific'">
+<ng-container *ngIf="display === 'enemy-specific'">
   <hr style="clear: both">
   <div class="infobox">
     <div class="table-responsive">
@@ -13,11 +13,18 @@
           <tr>
             <th colspan="2">
               <h2>{{enemyName}}</h2>
-              <h4>__location__</h4>
+              <h4>
+                <a
+                    href="https://eldenring.wiki.fextralife.com/{{stats.location | spaceToPlus}}"
+                    *ngIf="stats.location !== ''; else other">
+                  {{stats.location}}
+                </a>
+                <ng-template #other>__location__</ng-template>
+              </h4>
             </th>
           </tr>
           <tr>
-            <td style="text-align: center" attr.data-mce-style="text-align: center" colspan="2">
+            <td style="text-align: center" data-mce-style="text-align: center" colspan="2">
               __image__
             </td>
           </tr>
@@ -46,6 +53,36 @@
   </div>
 </ng-container>
 
+<ng-container *ngIf="showEnemySpecific">
+  <h3 class="bonfire">
+    Elden Ring {{enemyName}} Boss
+    <ng-container *ngIf="display === 'enemy-specific'">
+      ({{stats.location === '' ? '__location__' : stats.location}})
+    </ng-container>
+  </h3>
+
+  <ul>
+    <li>This is <strong *ngIf="!stats.optional">not</strong> an optional boss</li>
+    <li>
+      Closest Site of Grace:
+      <strong>{{stats.location === '' ? '__grace__' : stats.location}}</strong>
+    </li>
+    <li>
+      Multiplayer is <strong *ngIf="!stats.multiplayerAllowed">not</strong> allowed for this boss
+    </li>
+    <li>
+      You
+      <ng-container *ngIf="stats.summonsAllowed; else other">can</ng-container>
+      <ng-template #other><strong>cannot</strong></ng-template>
+      summon
+      <a class="wiki_link" href="https://eldenring.wiki.fextralife.com/Spirit+Ashes">
+        Spirit Ashes
+      </a>
+      for this boss
+    </li>
+  </ul>
+</ng-container>
+
 <h3 class="bonfire">{{enemyName}} Combat information</h3>
 <ul>
   <li *ngIf="showEnemySpecific">
@@ -62,17 +99,17 @@
     </span>
   </li>
   <li *ngIf="showCrossEnemy">
-    <a href="https://eldenring.wiki.fextralife.com/Stance">Stance</a>:
+    <a class="wiki_link" href="https://eldenring.wiki.fextralife.com/Stance">Stance</a>:
     <span style="color: #ffffff;" data-mce-style="color: #ffffff;">
       <strong>{{stats.stance}}</strong>
     </span>
   </li>
   <li *ngIf="showCrossEnemy">
-    <a href="https://eldenring.wiki.fextralife.com/Parrying">Parryable</a>:
+    <a class="wiki_link" href="https://eldenring.wiki.fextralife.com/Parrying">Parryable</a>:
     <ng-container *ngIf="stats.parriable; else other">
       Yes<ng-container *ngIf="stats.parriesPerCrit !== 1">,
         but {{stats.parriesPerCrit}} parries are required per
-        <a href="https://eldenring.wiki.fextralife.com/Parrying">stance break</a>
+        <a class="wiki_link" href="https://eldenring.wiki.fextralife.com/Parrying">stance break</a>
       </ng-container>
     </ng-container>
     <ng-template #other>No</ng-template>
@@ -80,29 +117,33 @@
   <li *ngIf="showCrossEnemy">
     <ng-container *ngIf="stats.critable; else other">
       Is vulnerable to a
-      <a href="https://eldenring.wiki.fextralife.com/Critical+Damage">critical hit</a>
+      <a class="wiki_link" href="https://eldenring.wiki.fextralife.com/Critical+Damage">
+        critical hit
+      </a>
       after being
-      <a href="https://eldenring.wiki.fextralife.com/Stance">stance broken</a>
+      <a class="wiki_link" href="https://eldenring.wiki.fextralife.com/Stance">stance broken</a>
       <ng-container *ngIf="stats.parriable"> or parried</ng-container>
     </ng-container>
     <ng-template #other>
       Only staggers after being
-      <a href="https://eldenring.wiki.fextralife.com/Stance">stance broken</a>
+      <a class="wiki_link" href="https://eldenring.wiki.fextralife.com/Stance">stance broken</a>
       <ng-container *ngIf="stats.parriable"> or parried</ng-container>
       and is <strong>not</strong> vulnerable to a
-      <a href="https://eldenring.wiki.fextralife.com/Critical+Damage">critical hit</a>
+      <a class="wiki_link" href="https://eldenring.wiki.fextralife.com/Critical+Damage">
+        critical hit
+      </a>
     </ng-template>
   </li>
-  <li *ngIf="damageTypes.length > 0">
+  <li *ngIf="inflictedDamageTypes.length > 0">
     Damage:
-    <ng-container *ngFor="let type of damageTypes; let i = index"><!--
+    <ng-container *ngFor="let type of inflictedDamageTypes; let i = index"><!--
       --><ng-container *ngIf="i !== 0">, </ng-container>
       <ng-container *ngTemplateOutlet="iconLink; context: {type}"></ng-container><!--
     --></ng-container>
   </li>
-  <li *ngIf="statusTypes.length > 0">
+  <li *ngIf="inflictedStatusTypes.length > 0">
     Inflicts:
-    <ng-container *ngFor="let type of statusTypes; let i = index"><!--
+    <ng-container *ngFor="let type of inflictedStatusTypes; let i = index"><!--
       --><ng-container *ngIf="i !== 0">, </ng-container>
       <ng-container *ngTemplateOutlet="iconLink; context: {type}"></ng-container><!--
     --></ng-container>
@@ -166,7 +207,7 @@
           </ng-container>
           <ng-container *ngIf="hasNewGameResistances">
             <tr><th colspan="9"><h4>Resistances</h4></th></tr>
-            <ng-container *ngFor="let entry of stats.resistances | keyvalue">
+            <ng-container *ngFor="let entry of stats.resistances | keyvalue:originalOrder">
               <ng-container *ngTemplateOutlet="
                 newGameRow; context: {type: entry.key, data: entry.value}
               "></ng-container>
@@ -184,7 +225,7 @@
   <div class="row">
     <div class="col-sm-6">
       <ul>
-        <ng-container *ngFor="let entry of stats.absorptions.physical | keyvalue">
+        <ng-container *ngFor="let entry of stats.absorptions | keyvalue:originalOrder | slice:0:4">
           <ng-container *ngTemplateOutlet="
             negation; context: {type: entry.key, value: entry.value}
           "></ng-container>
@@ -193,7 +234,7 @@
     </div>
     <div class="col-sm-6">
       <ul>
-        <ng-container *ngFor="let entry of stats.absorptions.magic | keyvalue">
+        <ng-container *ngFor="let entry of stats.absorptions | keyvalue:originalOrder | slice:4:8">
           <ng-container *ngTemplateOutlet="
             negation; context: {type: entry.key, value: entry.value}
           "></ng-container>
@@ -209,7 +250,7 @@
   <div class="row">
     <div class="col-sm-6">
       <ul>
-        <ng-container *ngFor="let entry of stats.resistances | keyvalue | slice:0:4">
+        <ng-container *ngFor="let entry of stats.resistances | keyvalue:originalOrder | slice:0:4">
           <ng-container *ngTemplateOutlet="
             resistance; context: {type: entry.key, value: entry.value}
           "></ng-container>
@@ -218,7 +259,7 @@
     </div>
     <div class="col-sm-6">
       <ul>
-        <ng-container *ngFor="let entry of stats.resistances | keyvalue | slice:4:6">
+        <ng-container *ngFor="let entry of stats.resistances | keyvalue:originalOrder | slice:4:6">
           <ng-container *ngTemplateOutlet="
             resistance; context: {type: entry.key, value: entry.value}
           "></ng-container>

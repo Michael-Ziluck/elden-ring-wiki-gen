@@ -136,6 +136,16 @@ tr:nth-child(2n+1) {
   background-color: #222222;
 }
 
+a.wiki_link {
+  color: #AB966F;
+  border-bottom: none;
+}
+
+a.wiki_link:hover {
+  color: #897859;
+  text-decoration: underline;
+}
+
 .infobox {
   width: 300px;
   float: right;

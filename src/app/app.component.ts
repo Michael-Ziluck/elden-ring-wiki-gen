@@ -11,6 +11,8 @@ import { HighlightService } from './highlight.service';
 import { CombatStats } from './combat-stats';
 import { TemplateComponent } from './template/template.component';
 import { EnemyInfo } from './enemy-info';
+import { damageTypes } from './damage';
+import { statusTypes, inflictedStatusTypes, resistedStatusTypes } from './status';
 
 const GAPI_API_KEY = 'AIzaSyDEQkGI_2t7LXHP0qhSnEDmQgMzP1SqIcw';
 
@@ -33,6 +35,7 @@ export class AppComponent {
 
   combatForm: FormGroup = this.fb.group({
     name: [''],
+    location: [''],
     health: [[0]],
     defense: [[]],
     runes: [[]],
@@ -40,7 +43,10 @@ export class AppComponent {
     parriable: [false],
     parriesPerCrit: [1],
     critable: [true],
-    damageTypes: this.fb.group({
+    optional: [true],
+    multiplayerAllowed: [true],
+    summonsAllowed: [true],
+    inflictedDamageTypes: this.fb.group({
       standard: [false],
       slash: [false],
       strike: [false],
@@ -50,7 +56,7 @@ export class AppComponent {
       lightning: [false],
       holy: [false],
     }),
-    statusTypes: this.fb.group({
+    inflictedStatusTypes: this.fb.group({
       poison: [false],
       scarletRot: [false],
       hemorrhage: [false],
@@ -58,18 +64,14 @@ export class AppComponent {
       deathBlight: [false],
     }),
     absorptions: this.fb.group({
-      physical: this.fb.group({
-        standard: [0],
-        slash: [0],
-        strike: [0],
-        pierce: [0],
-      }),
-      magic: this.fb.group({
-        magic: [0],
-        fire: [0],
-        lightning: [0],
-        holy: [0],
-      }),
+      standard: [0],
+      slash: [0],
+      strike: [0],
+      pierce: [0],
+      magic: [0],
+      fire: [0],
+      lightning: [0],
+      holy: [0],
     }),
     resistances: this.fb.group({
       poison: [[[100], [], [], [], [], [], [], []]],
@@ -144,13 +146,13 @@ export class AppComponent {
 
   @ViewChild(TemplateComponent) template!: TemplateComponent;
 
-  get allDamageTypes(): string[] {
-    return Object.keys(this.combatForm.value.damageTypes);
-  }
+  readonly damageTypes = damageTypes;
 
-  get allStatusTypes(): string[] {
-    return Object.keys(this.combatForm.value.statusTypes);
-  }
+  readonly statusTypes = statusTypes;
+
+  readonly inflictedStatusTypes = inflictedStatusTypes;
+
+  readonly resistedStatusTypes = resistedStatusTypes;
 
   constructor(
     private fb: FormBuilder,
@@ -202,20 +204,22 @@ export class AppComponent {
     });
     if (newGames.some(newGame => !newGame)) return;
 
+    if (info.name.includes(' - ')) {
+      this.combatForm.controls['location'].setValue(
+          info.name.split(' - ')[1].replace(/.* \((.*)\)$/, '$1'));
+    }
+
     this.combatForm.controls['stance'].setValue(newGames[0]![17]);
 
     const absorptions = this.combatForm.controls['absorptions'] as FormGroup;
-    const physical = absorptions.controls['physical'] as FormGroup;
-    physical.controls['standard'].setValue(newGames[0]![9]);
-    physical.controls['slash'].setValue(newGames[0]![10]);
-    physical.controls['strike'].setValue(newGames[0]![11]);
-    physical.controls['pierce'].setValue(newGames[0]![12]);
-
-    const elemental = absorptions.controls['magic'] as FormGroup;
-    elemental.controls['magic'].setValue(newGames[0]![13]);
-    elemental.controls['fire'].setValue(newGames[0]![14]);
-    elemental.controls['lightning'].setValue(newGames[0]![15]);
-    elemental.controls['holy'].setValue(newGames[0]![16]);
+    absorptions.controls['standard'].setValue(newGames[0]![9]);
+    absorptions.controls['slash'].setValue(newGames[0]![10]);
+    absorptions.controls['strike'].setValue(newGames[0]![11]);
+    absorptions.controls['pierce'].setValue(newGames[0]![12]);
+    absorptions.controls['magic'].setValue(newGames[0]![13]);
+    absorptions.controls['fire'].setValue(newGames[0]![14]);
+    absorptions.controls['lightning'].setValue(newGames[0]![15]);
+    absorptions.controls['holy'].setValue(newGames[0]![16]);
 
     this.setNewGameValues('health', newGames as string[][], 7);
     this.setNewGameValues('defense', newGames as string[][], 8);
